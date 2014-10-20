@@ -54,6 +54,34 @@ exports.add = function(user, pwd, callback) {
   });
 };
 
+exports.getUserById = function(user_id, callback) {
+  User.findById(user_id, function(err, res){
+    if (err) callback({errCode: global.ERROR});
+    if (res == null) {
+      return callback({errCode: global.INVALID_USER_ID});
+    }
+    return callback({errCode: global.SUCCESS, user_name: res.name, user_profile: res.profile});
+  });
+}
+
+exports.getUserByName = function(user_name, callback) {
+  var query = {};
+  query['name'] = new RegExp(user_name);
+  User.find(query, function(err, users) {
+    if (err) return callback({errCode: global.ERROR});
+
+    result = {};
+    result['errCode'] = global.SUCCESS;
+    result['users'] = [];
+    var count = 0;
+    users.forEach (function(u) {
+      var oneUser = {user_id: u._id, user_name: u.name, user_profile: u.profile};
+      result['users'][count++] = oneUser;
+    });
+    return callback(result);
+  });
+}
+
 // Delete all users (for testing)
 exports.deleteall = function(callback) {
   var user = User;
