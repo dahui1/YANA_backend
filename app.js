@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var friends = require('./routes/friends')
+var friends = require('./routes/friends');
+var request = require('./routes/request');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/friends', friends);
+app.use('/request', request);
 
 app.use(function(req, res, next) {
     req.collections = collections;
