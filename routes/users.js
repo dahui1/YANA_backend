@@ -11,7 +11,7 @@ router.get('/userlist', function(req, res) {
 });
 
 router.post('/create_user', function(req, res) {
-  var nvalidU = data.checkUser(req.body.user);
+  var nvalidU = data.checkUser(req.body.username);
   var nvalidP = data.checkPwd(req.body.password);
   if (nvalidP) return res.json({'errCode': nvalidP});
   if (nvalidU) return res.json({'errCode': nvalidU});
