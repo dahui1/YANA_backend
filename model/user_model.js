@@ -56,7 +56,7 @@ exports.add = function(user, pwd, callback) {
 
 exports.getUserById = function(user_id, callback) {
   User.findById(user_id, function(err, res){
-    if (err) callback({errCode: global.ERROR});
+    // if (err) callback({errCode: global.ERROR});
     if (res == null) {
       return callback({errCode: global.INVALID_USER_ID});
     }
@@ -66,6 +66,7 @@ exports.getUserById = function(user_id, callback) {
 
 exports.getUserByName = function(user_name, callback) {
   var query = {};
+  // Any username that contains the string
   query['name'] = new RegExp(user_name);
   User.find(query, function(err, users) {
     if (err) return callback({errCode: global.ERROR});

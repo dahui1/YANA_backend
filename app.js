@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var friends = require('./routes/friends');
 var request = require('./routes/request');
+var tests = require('./routes/TESTAPI');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/friends', friends);
 app.use('/request', request);
+app.use('/tests', tests);
 
 app.use(function(req, res, next) {
     req.collections = collections;
