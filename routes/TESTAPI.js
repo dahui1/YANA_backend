@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.post('/unit_tests', function(req, res) {
   var str = fs.realpathSync('.'); 
-  process.exec('mocha ' + str + '/tests/',
+  process.exec('mocha ' + str + '/unit_tests/',
     function (error, stdout, stderr) {
       if (error !== null) {
         console.log('exec error: ' + error);

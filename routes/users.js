@@ -27,13 +27,13 @@ router.post('/login', function(req, res) {
   });
 });
 
-router.post('/search_users_by_id', function(req, res) {
+router.get('/search_users_by_id', function(req, res) {
   data.getUserById(req.body.user_id, function(result) {
     return res.json(result);
   });
 });
 
-router.post('/search_users_by_name', function(req, res) {
+router.get('/search_users_by_name', function(req, res) {
   data.getUserByName(req.body.user_name, function(result) {
     return res.json(result);
   });

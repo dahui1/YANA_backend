@@ -14,10 +14,9 @@
     "debug": "~2.0.0",
     "jade": "~1.6.0",
     "mongodb": "*",
-    "mongoose": "*"
-  },
-  "devDependencies": {
-    "should": "^4.0.4",
-    "mocha": "*"
+    "mongoose": "*",
+    "mocha": "*",
+    "supertest": "*",
+    "should": "*"
   }
 }
