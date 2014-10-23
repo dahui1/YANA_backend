@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/friendlist', function(req, res) {
+router.get('/allfriends', function(req, res) {
   data.allfriends(function(result) {
     return res.json(result);
   });

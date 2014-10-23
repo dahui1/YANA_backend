@@ -194,12 +194,8 @@ describe('Users Test', function() {
 
 	describe('Search User By ID Test', function() {
 		it('should return errCode=1, the user\'s name and profile when user_id exists', function(done) {
-			var body = {
-				user_id : global.test_user1_id
-			};
 			request(url)
-				.get('/users/search_users_by_id')
-				.send(body)
+				.get('/users/search_users_by_id/' + global.test_user1_id)
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
@@ -214,12 +210,8 @@ describe('Users Test', function() {
 		});
 
 		it('should return errCode=-5 when user_id doesn\'t exist', function(done) {
-			var body = {
-				user_id : 'notexist'
-			};
 			request(url)
-				.get('/users/search_users_by_id')
-				.send(body)
+				.get('/users/search_users_by_id/notexist')
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
@@ -234,12 +226,8 @@ describe('Users Test', function() {
 
 	describe('Search User By Name Test', function() {
 		it('should return errCode=1, a list of user\'s ids, names and profiles when similar user_name exists', function(done) {
-			var body = {
-				user_name : global.test_user1
-			};
 			request(url)
-				.get('/users/search_users_by_name')
-				.send(body)
+				.get('/users/search_users_by_name/' + global.test_user1)
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
@@ -257,12 +245,8 @@ describe('Users Test', function() {
 		});
 
 		it('should return errCode=1 and an empty list when similar user_name doesn\'t exist', function(done) {
-			var body = {
-				user_name : 'unittestonly12345'
-			};
 			request(url)
-				.get('/users/search_users_by_name')
-				.send(body)
+				.get('/users/search_users_by_name/unittestonly12345')
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
