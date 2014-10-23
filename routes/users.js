@@ -47,4 +47,16 @@ router.get('/search_users_by_name/:user_name', function(req, res) {
   });
 });
 
+router.get('/get_profile/:user_id', function(req, res) {
+  return res.json({errCode: global.SUCCESS, profile : "profile"});
+});
+
+router.get('/get_friends/:user_id', function(req, res) {
+  return res.json({errCode: global.SUCCESS,
+    friends : [
+      {username : "kevin", user_id : "123"},
+      {username : "yaohui", user_id : "1234"}
+    ]});
+});
+
 module.exports = router;

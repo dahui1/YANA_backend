@@ -38,7 +38,7 @@ exports.add = function(user, pwd, callback) {
   // Check if the user name exists
   usr.findOne({name: user},function(err, result){
     if (err) return callback({errCode: global.ERROR});
-    if (result != null) 
+    if (result != null)
       return callback({errCode: global.USERNAME_ALREADY_EXISTS});
 
     // Add the user to the database
@@ -80,6 +80,13 @@ exports.getUserByName = function(user_name, callback) {
       result['users'][count++] = oneUser;
     });
     return callback(result);
+  });
+}
+
+exports.getfriends = function(callback) {
+  User.findById(user_id, function(err, res) {
+    if (err) callback({errCode: global.ERROR});
+    return callback({errCode: global.SUCCESS, friends : res.friends });
   });
 }
 
