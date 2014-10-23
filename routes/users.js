@@ -27,10 +27,18 @@ router.post('/login', function(req, res) {
   });
 });
 
+router.get('/search_users_by_id/', function(req, res) {
+  return res.json({errCode: global.INVALID_USER_ID});
+});
+
 router.get('/search_users_by_id/:user_id', function(req, res) {
   data.getUserById(req.param('user_id'), function(result) {
     return res.json(result);
   });
+});
+
+router.get('/search_users_by_name/', function(req, res) {
+  return res.json({errCode: 1, users: []});
 });
 
 router.get('/search_users_by_name/:user_name', function(req, res) {
