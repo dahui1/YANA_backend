@@ -22,4 +22,16 @@ router.post('/delete_friend', function(req, res) {
   });
 });
 
+router.get('/friend_list/:user_id', function(req, res) {
+  data.getFriends(req.param('user_id'), function(result) {
+    return res.json(result);
+  });
+});
+
+router.get('/friend_requests/:user_id', function(req, res) {
+  data.getFriendRequests(req.param('user_id'), function(result) {
+    return res.json(result);
+  });
+});
+
 module.exports = router;

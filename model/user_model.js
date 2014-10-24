@@ -76,15 +76,9 @@ exports.getUserByName = function(username, callback) {
       var oneUser = { user_id: u._id, username: u.username, profile: u.profile };
       result['users'][count++] = oneUser;
     });
-    return callback(result);
-  });
-}
 
-exports.getFriends = function(user_id, callback) {
-  User.findById(user_id, function(err, res) {
-    if (err) callback({ errCode: global.ERROR });
-    if (res == null) return callback({ errCode: global.INVALID_USER_ID });
-    return callback({ errCode: global.SUCCESS, friends: res.friends });
+    console.log("test getuser:" + result['users'][0].username);
+    return callback(result);
   });
 }
 

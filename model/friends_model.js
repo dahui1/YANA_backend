@@ -1,4 +1,5 @@
 var collections = require('./db_collections');
+var jquery = require('jquery');
 var Friends = collections.Friends;
 var User = collections.User;
 
@@ -52,6 +53,38 @@ exports.unfollow = function(to_id, from_id, callback) {
         });
       });
     }
+  });
+};
+
+exports.getFriends = function(user_id, callback) {
+  Friends.find({ from_id: user_id }, function(err, res) {
+    if (err) callback({ errCode: global.ERROR });
+    if (res == null) return callback({ errCode: global.INVALID_USER_ID });
+    return callback({ errCode: global.SUCCESS, friends: res });
+  });
+};
+
+exports.getFriendRequests = function(user_id, callback) {
+  Friends.find({ to_id: user_id }, function(err, response) {
+    if (err) callback({ errCode: global.ERROR });
+    if (response == null) return callback({ errCode: global.INVALID_USER_ID });
+
+    result = {};
+    result['errCode'] = 1;
+    result['friends'] = [];
+
+    response.forEach(function(r) {
+      var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
+      result['friends'].push(f);
+      Friends.find({ from_id: user_id, to_id: r.from_id }, function(err, res) {
+        if (err) callback({ errCode: global.ERROR });
+        if (res == '') {
+          // var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
+          // result['friends'].push(f);
+        }
+      });
+    });
+    return callback(result);
   });
 };
 

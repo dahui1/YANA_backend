@@ -51,10 +51,4 @@ router.get('/profile/:user_id', function(req, res) {
   return res.json({ errCode: global.SUCCESS, profile : "profile" });
 });
 
-router.get('/friend_list/:user_id', function(req, res) {
-  data.getFriends(req.param('user_id'), function(result) {
-    return res.json(result);
-  });
-});
-
 module.exports = router;
