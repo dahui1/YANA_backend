@@ -28,7 +28,7 @@ exports.createRequest =
 
 exports.getRequests = function(user_id, callback) {
   var request = Request;
-  request.find({ owner_id: user_id }, function(err, requests) {
+  request.find({ $or: [{ owner_id: user_id }, { invitations : user_id }] }, function(err, requests) {
     if (err) return callback({ errCode: global.ERROR });
     return callback(requests);
   });
