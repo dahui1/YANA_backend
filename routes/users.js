@@ -4,21 +4,21 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/userlist', function(req, res) {
-  data.allusers(function(result) {
+router.get('/user_list', function(req, res) {
+  data.allUsers(function(result) {
     return res.json(result);
   });
 });
 
 router.post('/create_user', function(req, res) {
-  var nvalidU = data.checkUser(req.body.username);
-  var nvalidP = data.checkPwd(req.body.password);
-  if (nvalidP) return res.json({'errCode': nvalidP});
-  if (nvalidU) return res.json({'errCode': nvalidU});
+  var isValidUsername = data.checkUser(req.body.username);
+  var isValidPassword = data.checkPwd(req.body.password);
+  if (isValidUsername) return res.json({ 'errCode': isValidUsername });
+  if (isValidPassword) return res.json({ 'errCode': isValidPassword });
 
   data.add(req.body.username, req.body.password, function(result) {
     return res.json(result);
-  })
+  });
 });
 
 router.post('/login', function(req, res) {
@@ -28,7 +28,7 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/search_users_by_id/', function(req, res) {
-  return res.json({errCode: global.INVALID_USER_ID});
+  return res.json({ errCode: global.INVALID_USER_ID });
 });
 
 router.get('/search_users_by_id/:user_id', function(req, res) {
@@ -38,25 +38,25 @@ router.get('/search_users_by_id/:user_id', function(req, res) {
 });
 
 router.get('/search_users_by_name/', function(req, res) {
-  return res.json({errCode: 1, users: []});
+  return res.json({ errCode: 1, users: [] });
 });
 
-router.get('/search_users_by_name/:user_name', function(req, res) {
-  data.getUserByName(req.param('user_name'), function(result) {
+router.get('/search_users_by_name/:username', function(req, res) {
+  data.getUserByName(req.param('username'), function(result) {
     return res.json(result);
   });
 });
 
-router.get('/get_profile/:user_id', function(req, res) {
-  return res.json({errCode: global.SUCCESS, profile : "profile"});
+router.get('/profile/:user_id', function(req, res) {
+  return res.json({ errCode: global.SUCCESS, profile : "profile" });
 });
 
-router.get('/get_friends/:user_id', function(req, res) {
-  return res.json({errCode: global.SUCCESS,
-    friends : [
+router.get('/friend_list/:user_id', function(req, res) {
+  return res.json({ errCode: global.SUCCESS,
+    friends: [
       {username : "kevin", user_id : "123"},
-      {username : "yaohui", user_id : "1234"}
-    ]});
+      {username : "yaohui", user_id : "1234"}]
+    });
 });
 
 module.exports = router;

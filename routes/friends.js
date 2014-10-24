@@ -4,8 +4,8 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/allfriends', function(req, res) {
-  data.allfriends(function(result) {
+router.get('/all_friends', function(req, res) {
+  data.allFriends(function(result) {
     return res.json(result);
   });
 });

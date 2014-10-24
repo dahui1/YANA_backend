@@ -4,8 +4,8 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/requests_list', function(req, res) {
-  data.requests_list(req.body.user_id, function(result) {
+router.get('/request_list', function(req, res) {
+  data.requestList(req.body.user_id, function(result) {
     return res.json(result);
   });
 });
@@ -16,20 +16,13 @@ router.post('/create_request', function(req, res) {
   // });
 
   // for testing
-  data.create_request("1", ["2", "3"], "dinner", "123123", "restaurant", "comment", function(result) {
+  data.createRequest("1", ["2", "3"], "dinner", "123123", "restaurant", "comment", function(result) {
     return res.json(result);
   });
 });
 
 router.post('/handle_request', function(req, res) {
-  var nvalidU = data.checkUser(req.body.user);
-  var nvalidP = data.checkPwd(req.body.password);
-  if (nvalidP) return res.json({'errCode': nvalidP});
-  if (nvalidU) return res.json({'errCode': nvalidU});
-
-  data.add(req.body.user, req.body.password, function(result) {
-    return res.json(result);
-  })
+  // TO-DO: IMPLEMENT THIS
 });
 
 module.exports = router;
