@@ -48,7 +48,9 @@ router.get('/search_users_by_name/:username', function(req, res) {
 });
 
 router.get('/profile/:user_id', function(req, res) {
-  return res.json({ errCode: global.SUCCESS, profile : "profile" });
+  data.getUserById(req.param('user_id'), function(result) {
+    return res.json({ errCode: global.SUCCESS, profile: result.username});
+  });
 });
 
 module.exports = router;
