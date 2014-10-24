@@ -52,11 +52,9 @@ router.get('/profile/:user_id', function(req, res) {
 });
 
 router.get('/friend_list/:user_id', function(req, res) {
-  return res.json({ errCode: global.SUCCESS,
-    friends: [
-      {username : "kevin", user_id : "123"},
-      {username : "yaohui", user_id : "1234"}]
-    });
+  data.getFriends(req.param('user_id'), function(result) {
+    return res.json(result);
+  });
 });
 
 module.exports = router;

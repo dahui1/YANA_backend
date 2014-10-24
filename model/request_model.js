@@ -9,8 +9,8 @@ exports.createRequest =
              restaurant,
              comment,
              callback) {
+  if (arguments.length != 7) return { errCode: global.INVALID_PARAMS };
   var request = Request;
-
   var new_request = new request();
   new_request.owner_id = user_id;
   new_request.invitations = invitations;
@@ -26,9 +26,9 @@ exports.createRequest =
   });
 };
 
-exports.requestList = function(user_id, callback) {
+exports.getRequests = function(user_id, callback) {
   var request = Request;
-  request.find(function(err, requests) {
+  request.find({ owner_id: user_id }, function(err, requests) {
     if (err) return callback({ errCode: global.ERROR });
     return callback(requests);
   });

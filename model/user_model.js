@@ -80,10 +80,11 @@ exports.getUserByName = function(username, callback) {
   });
 }
 
-exports.getFriends = function(callback) {
+exports.getFriends = function(user_id, callback) {
   User.findById(user_id, function(err, res) {
     if (err) callback({ errCode: global.ERROR });
-    return callback({ errCode: global.SUCCESS, friends : res.friends });
+    if (res == null) return callback({ errCode: global.INVALID_USER_ID });
+    return callback({ errCode: global.SUCCESS, friends: res.friends });
   });
 }
 

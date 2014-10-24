@@ -4,25 +4,28 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/request_list', function(req, res) {
-  data.requestList(req.body.user_id, function(result) {
+router.get('/request_list/:user_id', function(req, res) {
+  data.getRequests(req.param('user_id'), function(result) {
     return res.json(result);
   });
 });
 
 router.post('/create_request', function(req, res) {
-  // data.create_request(req.body.user, req.body.password, function(result) {
-  //   return res.json(result);
-  // });
-
-  // for testing
-  data.createRequest("1", ["2", "3"], "dinner", "123123", "restaurant", "comment", function(result) {
-    return res.json(result);
-  });
+  data.create_request(
+    req.body.user_id,
+    req.body.invitations,
+    req.body.meal_type,
+    req.body.meal_time,
+    req.body.restaurant,
+    req.body.comment,
+    function(result) { return res.json(result); }
+  );
 });
 
 router.post('/handle_request', function(req, res) {
-  // TO-DO: IMPLEMENT THIS
+  data.handleRequest(req.body.user_id, req.body.request_id, req.body.action, function(result) {
+    return res.json(result);
+  });
 });
 
 module.exports = router;
