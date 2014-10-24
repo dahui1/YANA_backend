@@ -64,7 +64,7 @@ exports.getUserById = function(user_id, callback) {
 exports.getUserByName = function(username, callback) {
   var query = {};
   // Any username that contains the string
-  query['name'] = new RegExp(username);
+  query['username'] = new RegExp(username);
   User.find(query, function(err, users) {
     if (err) return callback({ errCode: global.ERROR });
 

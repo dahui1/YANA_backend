@@ -11,8 +11,8 @@ router.get('/user_list', function(req, res) {
 });
 
 router.post('/create_user', function(req, res) {
-  var isValidUsername = data.checkUser(req.body.username);
-  var isValidPassword = data.checkPwd(req.body.password);
+  var isValidUsername = data.checkUsername(req.body.username);
+  var isValidPassword = data.checkPassword(req.body.password);
   if (isValidUsername) return res.json({ 'errCode': isValidUsername });
   if (isValidPassword) return res.json({ 'errCode': isValidPassword });
 

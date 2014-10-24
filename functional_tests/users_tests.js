@@ -203,8 +203,8 @@ describe('Users Test', function() {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
-					res.body.user_name.should.equal(global.test_user1);
-					res.body.user_profile.should.equal('test');
+					res.body.username.should.equal(global.test_user1);
+					res.body.profile.should.equal('test');
 					done();
 				});
 		});
@@ -237,9 +237,9 @@ describe('Users Test', function() {
 					res.body.errCode.should.equal(1);
 					res.body.users.length.should.equal(2);
 					res.body.users[0].user_id.should.equal(global.test_user1_id);
-					res.body.users[0].user_name.should.equal(global.test_user1);
+					res.body.users[0].username.should.equal(global.test_user1);
 					res.body.users[1].user_id.should.equal(global.test_user2_id);
-					res.body.users[1].user_name.should.equal(global.test_user2);
+					res.body.users[1].username.should.equal(global.test_user2);
 					done();
 				});
 		});
