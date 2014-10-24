@@ -258,5 +258,21 @@ describe('Users Test', function() {
 					done();
 				});
 		});
+
+
+		it('should return errCode=1 and an empty list when username is empty', function(done) {
+			request(url)
+				.get('/users/search_users_by_name/')
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err)　{
+						throw err;
+					}
+					res.body.errCode.should.equal(1);
+					res.body.users.length.should.equal(0);
+					done();
+				});
+		});
 	});
 });
