@@ -73,18 +73,21 @@ exports.getFriendRequests = function(user_id, callback) {
     result['errCode'] = 1;
     result['friends'] = [];
 
+    var len = response.length;
+    var count = 0;
+
     response.forEach(function(r) {
-      var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
-      result['friends'].push(f);
       Friends.find({ from_id: user_id, to_id: r.from_id }, function(err, res) {
         if (err) callback({ errCode: global.ERROR });
         if (res == '') {
-          // var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
-          // result['friends'].push(f);
+          var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
+          result['friends'].push(f);
         }
+        count++;
+        if (count == len)
+          return callback(result);
       });
     });
-    return callback(result);
   });
 };
 
