@@ -74,13 +74,13 @@ describe('Create User function', function(){
 });
 
 describe('Login function', function(){
-  // it('should return {errCode: 1, user_id: x} when the name and password are both valid', function(done){
-  // 	model.login(global.test_user1, 'test', function(result) {
-  // 	  assert.equal(1, result.errCode);
-  //     assert.equal(global.test_user1_id, result.user_id);
-  // 	  done();
-  // 	});
-  // });
+  it('should return {errCode: 1, user_id: x} when the name and password are both valid', function(done){
+  	model.login(global.test_user1, 'test', function(result) {
+  	  assert.equal(1, result.errCode);
+      assert.equal(global.test_user1_id, result.user_id);
+  	  done();
+  	});
+  });
 
   it('should return {errCode: -4} when the password is invalid', function(done){
   	model.login('test124', 'test124', function(result) {
@@ -98,26 +98,26 @@ describe('Login function', function(){
 });
 
 describe('Search user function', function(){
-  // it('should return {errCode: 1, users: []} when the name is valid', function(done){
-  //   model.getUserByName('unittest', function(result) {
-  //     assert.equal(1, result.errCode);
-  //     assert.equal(2, result.users.length);
-  //     assert.equal(global.test_user1_id, result.users[0].user_id);
-  //     assert.equal(global.test_user1, result.users[0].username);
-  //     assert.equal(global.test_user2_id, result.users[1].user_id);
-  //     assert.equal(global.test_user2, result.users[1].username);
-  //     done();
-  //   });
-  // });
+  it('should return {errCode: 1, users: []} when the name is valid', function(done){
+    model.getUserByName('unittest', function(result) {
+      assert.equal(1, result.errCode);
+      assert.equal(2, result.users.length);
+      assert.equal(global.test_user1_id, result.users[0].user_id);
+      assert.equal(global.test_user1, result.users[0].username);
+      assert.equal(global.test_user2_id, result.users[1].user_id);
+      assert.equal(global.test_user2, result.users[1].username);
+      done();
+    });
+  });
 
-  // it('should return {errCode: 1, username: unittestonly, profile: test} when the id exists', function(done){
-  //   model.getUserById(global.test_user1_id, function(result) {
-  //     assert.equal(1, result.errCode);
-  //     assert.equal(global.test_user1, result.username);
-  //     assert.equal('test', result.profile);
-  //     done();
-  //   });
-  // });
+  it('should return {errCode: 1, username: unittestonly, profile: test} when the id exists', function(done){
+    model.getUserById(global.test_user1_id, function(result) {
+      assert.equal(1, result.errCode);
+      assert.equal(global.test_user1, result.username);
+      assert.equal('test', result.profile);
+      done();
+    });
+  });
 
   it('should return {errCode: -5} when the id doesn\'t exist', function(done){
     model.getUserById('notexist', function(result) {

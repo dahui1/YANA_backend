@@ -77,7 +77,6 @@ exports.getUserByName = function(username, callback) {
       result['users'][count++] = oneUser;
     });
 
-    console.log("test getuser:" + result['users'][0].username);
     return callback(result);
   });
 }
