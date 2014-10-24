@@ -11,7 +11,7 @@ router.get('/request_list/:user_id', function(req, res) {
 });
 
 router.post('/create_request', function(req, res) {
-  data.create_request(
+  data.createRequest(
     req.body.user_id,
     req.body.invitations,
     req.body.meal_type,

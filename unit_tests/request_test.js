@@ -15,7 +15,7 @@ describe('Create Meal Request', function() {
   it('should return {errCode: 1} and request_id when all params are provided', function(done) {
     model.createRequest(
       global.test_user1_id,
-      [global.test_user2],
+      [global.test_user2_id],
       "meal type",
       "time",
       "restaurant",
@@ -30,7 +30,7 @@ describe('Create Meal Request', function() {
   it('should return {errCode: -8} when not all params are provided', function(done) {
     var poo = model.createRequest(
       global.test_user1_id,
-      [global.test_user2],
+      [global.test_user2_id],
       "meal type",
       "time",
       "comment").errCode;
