@@ -16,7 +16,7 @@ describe('Create Meal Request', function() {
       global.test_user1_id,
       [global.test_user2_id],
       "meal type",
-      "time",
+      Date.now(),
       "restaurant",
       "comment", function(result) {
         assert.equal(1, result.errCode);

@@ -4,6 +4,8 @@ var assert = require('assert');
 var app = require('../app');
 var model = require('../model/user_model');
 
+require('../test_variables');
+
 // Generate a random name for each test
 var randomName = Math.floor((Math.random() * 10000) + 1);
 
@@ -59,10 +61,10 @@ describe('Check Password', function(){
 
 describe('Create User function', function(){
   it('should return {errCode: 1} when the name and password are both valid and the user doesn\'t exist', function(done){
-  	model.add(randomName, 'test125', function(result) {
-  	  assert.equal(1, result.errCode);
-  	  done();
-  	});
+    model.add(randomName, 'test124', function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
   });
 
   it('should return {errCode: -3} when the user already exists', function(done){
