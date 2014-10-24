@@ -15,6 +15,7 @@ exports.createRequest =
   new_request.owner_id = user_id;
   new_request.invitations = invitations;
   new_request.meal_type = meal_type;
+  new_request.meal_time = meal_time;
   new_request.restaurant = restaurant;
   new_request.comment = comment;
 
