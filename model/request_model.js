@@ -19,6 +19,7 @@ exports.createRequest =
   new_request.comment = comment;
 
   new_request.accepted_user = "";
+  new_request.declined_users = [];
 
   new_request.save(function(err, req) {
     if (err) return callback({ errCode: global.ERROR });
@@ -38,8 +39,15 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
   var request = Request;
 
   // if req_id does not exist, nothing will happen. i think request._id will be null
-  request.update({ _id : req_id }, { $set : { accepted_user: user_id }}, function(err, req) {
-    if (err) return callback({ errCode: global.ERROR });
-    return callback({ errCode: global.SUCCESS, request_id: req._id });
-  });
+  if (action == "accept") {
+    request.update({ _id : req_id }, { $set : { accepted_user: user_id }}, function(err, req) {
+      if (err) return callback({ errCode: global.ERROR });
+      return callback({ errCode: global.SUCCESS, request_id: req._id });
+    });
+  } else if (action == "decline") {
+    request.update({ _id : req_id }, { $push : { declined_users: user_id }}, function(err, req) {
+      if (err) return callback({ errCode: global.ERROR });
+      return callback({ errCode: global.SUCCESS, request_id: req._id });
+    });
+  }
 };

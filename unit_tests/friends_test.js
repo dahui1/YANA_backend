@@ -69,3 +69,11 @@ describe('Delete friend function', function(){
     });
   });
 });
+
+describe('Get friend list function', function() {
+
+});
+
+describe('Get friend requests function', function() {
+
+});

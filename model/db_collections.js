@@ -15,6 +15,7 @@ var Request = new Schema({
   owner_username : String,
   invitations: [String],
   accepted_user: String,
+  declined_users: [String],
   meal_type: String,
   meal_time: Date,
   restaurant: String,
