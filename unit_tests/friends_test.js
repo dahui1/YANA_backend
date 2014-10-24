@@ -5,7 +5,6 @@ var app = require('../app');
 var model = require('../model/friends_model');
 
 require('../test_variables');
-
 /*
 User: {name: 'unittestonly', password: 'test', _id: global.test_user1_id} and
 User: {name: 'unittestonly2', password: 'test', _id: global.test_user2_id} are created for testing only
