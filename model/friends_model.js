@@ -18,7 +18,7 @@ exports.follow = function(to_id, from_id, callback) {
         if (err) return callback({ errCode: global.ERROR });
         if (pair) return callback({ errCode: global.ALREADY_FOLLOWED });
         var newFriends = new Friends();
-        newFriends.to_username = to_res.name;
+        newFriends.to_username = to_res.username;
         newFriends.to_id = to_id;
         newFriends.from_id = from_id;
 
