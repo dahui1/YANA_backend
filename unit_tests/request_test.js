@@ -34,12 +34,13 @@ describe('Create Meal Request', function() {
       "comment").errCode;
 
     assert.equal(err, -8);
+    done();
   });
 });
 
 describe('Get Request List', function() {
   it('should return {errCode: 1, requests}', function() {
-    model.getRequests('5449b4c8adaabc6335ed9f2a',
+    model.getRequests("5449c0f3e4b0bec4bf235a28",
       function(result) {
         assert.equal(result.errCode, 1);
         assert.equal(result.requests.length, 0);
@@ -52,7 +53,7 @@ describe('Handle Request', function() {
   it('should return {errCode: 1, request_id} on accept', function() {
     model.handleRequest(
       "5449c0f3e4b0bec4bf235a28",
-      "5449b4c8adaabc6335ed9f2a",
+      "544b0140059ba48453232a6e",
       "accept",
       function(result) {
         assert.equal(result.errCode, 1);
@@ -64,7 +65,7 @@ describe('Handle Request', function() {
   it('should return {errCode: 1, request_id} on deny', function() {
     model.handleRequest(
       "5449c0f3e4b0bec4bf235a28",
-      "5449b4c8adaabc6335ed9f2a",
+      "544b0140059ba48453232a6e",
       "decline",
       function(result) {
         assert.equal(result.errCode, 1);
