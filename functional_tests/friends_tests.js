@@ -165,4 +165,36 @@ describe('Friends Test', function() {
 				});
 		});
 	});
+
+	describe('Get friend list function', function() {
+		it ('should return {errCode: 1} when getting friends of a valid user', function(done) {
+			request(url)
+				.get('/friends/friend_list/' + global.test_user1_id)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err)　{
+						throw err;
+					}
+					res.body.errCode.should.equal(1);
+					done();
+				});
+	  	});
+	});
+
+	describe('Get friend requests function', function() {
+		it ('should return {errCode: 1} when getting friends of a valid user', function(done) {
+			request(url)
+				.get('/friends/friend_requests/' + global.test_user1_id)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err)　{
+						throw err;
+					}
+					res.body.errCode.should.equal(1);
+					done();
+				});
+	  	});
+	});
 });
