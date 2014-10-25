@@ -1,5 +1,4 @@
 var collections = require('./db_collections');
-var jquery = require('jquery');
 var Friends = collections.Friends;
 var User = collections.User;
 
