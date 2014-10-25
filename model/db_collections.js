@@ -17,7 +17,7 @@ var Request = new Schema({
   accepted_user: String,
   declined_users: [String],
   meal_type: String,
-  meal_time: Date,
+  meal_time: String,
   restaurant: String,
   comment: String},
   {collection : 'requests'}

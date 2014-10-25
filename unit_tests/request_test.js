@@ -16,7 +16,7 @@ describe('Create Meal Request', function() {
       global.test_user1_id,
       [global.test_user2_id],
       "meal type",
-      Date.now(),
+      "1414178401",
       "restaurant",
       "comment", function(result) {
         assert.equal(1, result.errCode);
@@ -25,17 +25,16 @@ describe('Create Meal Request', function() {
       });
   });
 
-  // it('should return {errCode: -8} when not all params are provided', function(done) {
-  //   var poo = model.createRequest(
-  //     global.test_user1_id,
-  //     [global.test_user2_id],
-  //     "meal type",
-  //     "time",
-  //     "comment").errCode;
+  it('should return {errCode: -8} when not all params are provided', function(done) {
+    var err = model.createRequest(
+      global.test_user1_id,
+      [global.test_user2_id],
+      "meal type",
+      "time",
+      "comment").errCode;
 
-  //   assert.equal(poo, -8);
-  //   // done();
-  // });
+    assert.equal(err, -8);
+  });
 });
 
 describe('Get Request List', function() {
