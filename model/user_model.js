@@ -105,3 +105,10 @@ exports.allUsers = function(callback) {
     return callback(users);
   })
 };
+
+exports.isLoggedIn = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.json({ errCode: INVALID_ACTION });
+}
