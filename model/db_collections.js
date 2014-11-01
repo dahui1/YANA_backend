@@ -6,8 +6,16 @@ var User = new Schema({
   username : String,
   password : String,
   profile : String,
-  friends : [String]
+  profile : {
+    privacy : Number,
+    about : String,
+    age : Number,
+    gender : String,
+    phone_number : String
   },
+  friends : [String],
+  longitude : Number,
+  latitude : Number},
   {collection : 'users'}
 );
 
@@ -28,7 +36,8 @@ var Request = new Schema({
   meal_type: String,
   meal_time: String,
   restaurant: String,
-  comment: String},
+  comment: String,
+  url : String},
   {collection : 'requests'}
 );
 
@@ -37,6 +46,13 @@ var Friends = new Schema({
   to_id : String,
   from_id : String},
   {collection : 'friends'}
+);
+
+var Notifications = new Schema({
+  to_id : String,
+  content : String,
+  time : String},
+  {collection : 'notifications'}
 );
 
 var collections = {

@@ -2,6 +2,9 @@ var express = require('express');
 var process = require('child_process');
 var fs = require('fs'); 
 var router = express.Router();
+var user = require('../model/user_model');
+var request = require('../model/request_model');
+var friend = require('../model/friends_model');
 
 router.post('/unit_tests', function(req, res) {
   var str = fs.realpathSync('.'); 
@@ -30,7 +33,23 @@ router.post('/unit_tests', function(req, res) {
           return "\\u" + ("0000" + m.charCodeAt(0).toString(16)).slice(-4);
         }), totalTests: count + fails});
       }
+  });
+});
+
+router.post('/resetdb', function(req, res) {
+  user.deleteAll(function(result){
+    if (result)
+      return res.json(result);
+    friend.deleteAll(function(result){
+      if (result)
+        return res.json(result);
+      request.deleteAll(function(result) {
+        if (result)
+          return res.json(result);
+        return res.json({ errCode: global.SUCCESS });
+      });
     });
   });
+});
 
 module.exports = router;

@@ -1,3 +1,4 @@
+require('../test_variables');
 var collections = require('./db_collections');
 var User = collections.User;
 
@@ -85,15 +86,18 @@ exports.getUserByName = function(username, callback) {
 exports.deleteAll = function(callback) {
   var user = User;
   user.find(function(err, users) {
-    if (err) return callback({errCode: global.ERROR});
+    if (err) return callback(err);
   	for (var i = 0; i < users.length; i++) {
+      if (users[i]._id == global.test_user1_id ||
+          users[i]._id == global.test_user2_id)
+        continue;
       user.remove({
       	_id: users[i]._id
       }, function(err) {
-      	if (err) return callback({errCode: global.ERROR});
+      	if (err) return callback(err);
   	  });
   	};
-  	return callback({errCode: global.SUCCESS});
+  	return callback(false);
   });
 };
 
