@@ -14,6 +14,7 @@ router.get('/request_list/:user_id', user.isLoggedIn, function(req, res) {
 router.post('/create_request', user.isLoggedIn, function(req, res) {
   data.createRequest(
     req.body.user_id,
+    req.body.username
     req.body.invitations,
     req.body.meal_type,
     req.body.meal_time,
