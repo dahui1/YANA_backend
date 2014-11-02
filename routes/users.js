@@ -35,6 +35,8 @@ router.post('/login', function(req, res) {
           return res.json(err);
         return res.json(info);
       });
+    } else {
+      return res.json(info);
     }
   })(req);
 });
