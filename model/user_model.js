@@ -9,7 +9,7 @@ exports.checkUsername = function(user) {
 }
 
 exports.checkPassword = function(password) {
-  if (password.length > global.MAX_PASSWORD_LENGTH)
+  if (password.length > global.MAX_PASSWORD_LENGTH || password.length == 0)
     return global.INVALID_PASSWORD;
   return 0;
 };
