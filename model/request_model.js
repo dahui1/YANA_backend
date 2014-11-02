@@ -3,6 +3,7 @@ var Request = collections.Request;
 
 exports.createRequest =
     function(user_id,
+             username,
              invitations,
              meal_type,
              meal_time,
@@ -13,6 +14,7 @@ exports.createRequest =
   var request = Request;
   var new_request = new request();
   new_request.owner_id = user_id;
+  new_request.owner_username = username;
   new_request.invitations = invitations;
   new_request.meal_type = meal_type;
   new_request.meal_time = meal_time;
