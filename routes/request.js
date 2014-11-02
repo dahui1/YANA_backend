@@ -1,16 +1,17 @@
 var express = require('express');
 var data = require('../model/request_model');
+var user = require('../model/user_model');
 var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/request_list/:user_id', function(req, res) {
+router.get('/request_list/:user_id', user.isLoggedIn, function(req, res) {
   data.getRequests(req.param('user_id'), function(result) {
     return res.json(result);
   });
 });
 
-router.post('/create_request', function(req, res) {
+router.post('/create_request', user.isLoggedIn, function(req, res) {
   data.createRequest(
     req.body.user_id,
     req.body.invitations,
@@ -22,7 +23,7 @@ router.post('/create_request', function(req, res) {
   );
 });
 
-router.post('/handle_request', function(req, res) {
+router.post('/handle_request', user.isLoggedIn, function(req, res) {
   data.handleRequest(req.body.user_id, req.body.request_id, req.body.action, function(result) {
     return res.json(result);
   });
