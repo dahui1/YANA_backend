@@ -98,3 +98,19 @@ exports.allFriends = function(callback) {
     return callback(fs);
   })
 };
+
+// Delete all friends (for testing)
+exports.deleteAll = function(callback) {
+  var friends = Friends;
+  friends.find(function(err, fs) {
+    if (err) return callback(err);
+    for (var i = 0; i < fs.length; i++) {
+      friends.remove({
+        _id: fs[i]._id
+      }, function(err) {
+        if (err) return callback(err);
+      });
+    };
+    return callback(false);
+  });
+};

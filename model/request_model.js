@@ -63,3 +63,19 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
     });
   }
 };
+
+// Delete all requests (for testing)
+exports.deleteAll = function(callback) {
+  var request = Request;
+  request.find(function(err, rs) {
+    if (err) return callback(err);
+    for (var i = 0; i < rs.length; i++) {
+      request.remove({
+        _id: rs[i]._id
+      }, function(err) {
+        if (err) return callback(err);
+      });
+    };
+    return callback(false);
+  });
+};
