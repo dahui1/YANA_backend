@@ -1,5 +1,9 @@
 var collections = require('./db_collections');
+var apn = require('apn');
+var options = { };
+var apnConnection = new apn.Connection(options);
 var Request = collections.Request;
+var User = collections.User;
 
 exports.createRequest =
     function(user_id,
@@ -23,6 +27,12 @@ exports.createRequest =
 
   new_request.accepted_user = "";
   new_request.declined_users = [];
+
+  if (invitations instanceof Array) {
+    invitations.forEach(function (invited_user) {
+      sendPush(invited_user, "send", meal_type, meal_time);
+    });
+  }
 
   new_request.save(function(err, req) {
     if (err) return callback({ errCode: global.ERROR });
@@ -49,6 +59,7 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
       request.findOne({ _id: req_id}, function(err, request) {
         if (err) return callback({ errCode: global.ERROR });
         if (!request) return callback({ errCode: global.SUCCESS });
+        sendPush(request.owner_id, "accept", request.meal_type, request.meal_time);
         return callback({ errCode: global.SUCCESS, request_id: request._id });
       });
     });
@@ -64,6 +75,25 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
       });
     });
   }
+};
+
+function sendPush(user_id, type, meal_type, meal_time) {
+  var user = User;
+  user.findById(user_id, function (err, res) {
+    if (res != null && res.device_token != null) {
+      var device = new apn.Device(res.device_token);
+      var new_request_push = new apn.Notification();
+      if (type == "send") {
+        new_request_push.alert = res.username + " has invited you to get " + meal_type + " at " + meal_time + "!";
+      } else if (type == "accept") {
+        new_request_push.alert =
+          res.username + " has accepted your invitation to get " + meal_type + " at " + meal_time + "!";
+      }
+
+      new_request_push.payload = { 'thisisfrom': 'kevin' };
+      apnConnection.push(new_request_push, device);
+    }
+  });
 };
 
 // Delete all requests (for testing)

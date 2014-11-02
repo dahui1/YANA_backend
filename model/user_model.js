@@ -15,20 +15,23 @@ exports.checkPassword = function(password) {
 };
 
 // User Login
-exports.login = function(username, password, callback) {
+exports.login = function(username, password, device_token, callback) {
   var user = User;
-  user.findOne({ username: username }, function(err, res){
+  user.findAndModify({
+      query: { username: username },
+      update: { $set: { device_token: device_token }}},
+      function(err, res){
     if (err) return callback({ errCode: global.ERROR });
 
     // User not existing or the password is wrong
     if (res == null || res.password != password)
-     return callback({ errCode: global.WRONG_USERNAME_OR_PASSWORD });
+      return callback({ errCode: global.WRONG_USERNAME_OR_PASSWORD });
 
     // save the res
     res.save(function(err) {
       if (err) return callback({ errCode: global.ERROR });
       return callback({ errCode: global.SUCCESS, user_id: res._id });
-  	});
+    });
   });
 };
 

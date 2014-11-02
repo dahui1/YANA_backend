@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var User = new Schema({
   username : String,
   password : String,
+  device_token : String,
   profile : String,
   profile : {
     privacy : Number,
