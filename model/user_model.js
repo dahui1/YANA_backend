@@ -33,16 +33,15 @@ exports.login = function(username, password, callback) {
 };
 
 exports.updateDeviceToken = function(user_id, device_token, callback) {
-  user.findAndModify({
-      query: { username: username },
-      update: { $set: { device_token: device_token }}},
-    function(err, res){
+  var user = User;
+  user.update({ _id: user_id }, { $set: { device_token: device_token } },
+    function(err, res) {
       if (err) return callback({ errCode: global.ERROR });
       if (res == null) return callback({ errCode: global.INVALID_USER_ID });
       return callback({ errCode: global.SUCCESS });
     }
   );
-}
+};
 
 // Create Account
 exports.add = function(username, password, callback) {
