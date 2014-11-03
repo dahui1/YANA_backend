@@ -91,7 +91,7 @@ function sendPush(user_id, type, meal_type, meal_time) {
       }
 
       new_request_push.payload = { 'thisisfrom': 'kevin' };
-      apnConnection.push(new_request_push, device);
+      apnConnection.pushNotification(new_request_push, device);
     }
   });
 };
