@@ -3,16 +3,18 @@ var Request = collections.Request;
 var User = collections.User;
 
 var apn = require('apn');
-var root = process.cwd();
-console.log(root);
+var path = require('path');
+
+var notificationCallback = function(errorNum, notification){
+  console.log('Error is: %d', errorNum);
+  console.log('notification: '+ notification);
+};
 
 var options = {
-  cert: root + '/cert.pem', /* Certificate file path */
-  key:  root + '/key.pem',  /* Key file path */
-  gateway: 'gateway.sandbox.push.apple.com',/* gateway address */
-  port: 2195,                       /* gateway port */
-  enhanced: true,                   /* enable enhanced format */
-  errorCallback: undefined         /* Callback when error occurs function(err,notification) */
+  cert: path.join(__dirname + './../cert.pem'), /* Certificate file path */
+  key:  path.join(__dirname + './../key.pem'),  /* Key file path */
+  gateway: 'gateway.sandbox.push.apple.com',
+  errorCallback: notificationCallback         /* Callback when error occurs function(err,notification) */
 };
 
 var apnConnection = new apn.Connection(options);
@@ -101,8 +103,6 @@ function sendPush(user_id, type, meal_type, meal_time) {
         new_request_push.alert =
           res.username + " has accepted your invitation to get " + meal_type + " at " + meal_time + "!";
       }
-
-      new_request_push.payload = { 'thisisfrom': 'kevin' };
       apnConnection.pushNotification(new_request_push, device);
     }
   });
