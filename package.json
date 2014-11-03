@@ -24,7 +24,8 @@
     "passport-google-oauth" : "*",
     "connect-flash" : "*",     
     "bcrypt-nodejs" : "*",
-    "express-session" : "*"
+    "express-session" : "*",
+    "apn" : "*"
 
   }
 }

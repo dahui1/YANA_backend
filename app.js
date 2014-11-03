@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
+var apn = require('apn');
 
 require('./config/passport')(passport);
 
