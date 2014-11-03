@@ -14,7 +14,7 @@ exports.createRequest =
              restaurant,
              comment,
              callback) {
-  if (arguments.length != 7) return { errCode: global.INVALID_PARAMS };
+  if (arguments.length != 8) return callback({ errCode: global.INVALID_PARAMS });
   var request = Request;
   var new_request = new request();
   new_request.owner_id = user_id;
