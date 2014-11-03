@@ -1,9 +1,21 @@
 var collections = require('./db_collections');
-var apn = require('apn');
-var options = { };
-var apnConnection = new apn.Connection(options);
 var Request = collections.Request;
 var User = collections.User;
+
+var apn = require('apn');
+var root = process.cwd();
+console.log(root);
+
+var options = {
+  cert: root + '/certs/new/cert.pem', /* Certificate file path */
+  key:  root + '/certs/new/key.pem',  /* Key file path */
+  gateway: 'gateway.sandbox.push.apple.com',/* gateway address */
+  port: 2195,                       /* gateway port */
+  enhanced: true,                   /* enable enhanced format */
+  errorCallback: undefined         /* Callback when error occurs function(err,notification) */
+};
+
+var apnConnection = new apn.Connection(options);
 
 exports.createRequest =
     function(user_id,
