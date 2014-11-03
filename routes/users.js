@@ -41,6 +41,12 @@ router.post('/login', function(req, res) {
   })(req);
 });
 
+router.post('/update_device_token', function(req, res) {
+  data.updateDeviceToken(req.body.user_id, req.body.device_token, function(result) {
+    return res.json(result);
+  });
+});
+
 router.post('/logout', data.isLoggedIn, function(req, res) {
   req.logout();
   return res.json({errCode: global.SUCCESS});

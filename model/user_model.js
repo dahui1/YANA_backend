@@ -15,12 +15,9 @@ exports.checkPassword = function(password) {
 };
 
 // User Login
-exports.login = function(username, password, device_token, callback) {
+exports.login = function(username, password, callback) {
   var user = User;
-  user.findAndModify({
-      query: { username: username },
-      update: { $set: { device_token: device_token }}},
-      function(err, res){
+  user.find({ username: username }, function(err, res){
     if (err) return callback({ errCode: global.ERROR });
 
     // User not existing or the password is wrong
@@ -34,6 +31,18 @@ exports.login = function(username, password, device_token, callback) {
     });
   });
 };
+
+exports.updateDeviceToken = function(user_id, device_token, callback) {
+  user.findAndModify({
+      query: { username: username },
+      update: { $set: { device_token: device_token }}},
+    function(err, res){
+      if (err) return callback({ errCode: global.ERROR });
+      if (res == null) return callback({ errCode: global.INVALID_USER_ID });
+      return callback({ errCode: global.SUCCESS });
+    }
+  );
+}
 
 // Create Account
 exports.add = function(username, password, callback) {
