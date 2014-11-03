@@ -7,8 +7,8 @@ var root = process.cwd();
 console.log(root);
 
 var options = {
-  cert: root + '/certs/new/cert.pem', /* Certificate file path */
-  key:  root + '/certs/new/key.pem',  /* Key file path */
+  cert: root + '/cert.pem', /* Certificate file path */
+  key:  root + '/key.pem',  /* Key file path */
   gateway: 'gateway.sandbox.push.apple.com',/* gateway address */
   port: 2195,                       /* gateway port */
   enhanced: true,                   /* enable enhanced format */
