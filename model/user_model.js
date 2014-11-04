@@ -98,28 +98,37 @@ exports.getUserProfile = function(user_id, target_id, callback) {
   User.findById(target_id, function(err, res){
     if (res == null) return callback({ errCode: global.INVALID_USER_ID });
 
-    // If user gets his own profile, just return everything in profile
+// If user gets his own profile, just return everything in profile
     if (user_id == target_id) {
-        return callback({ errCode: global.SUCCESS, username: res.username, profile: res.profile });
+        res.profile["username"] = res.username;
+        return callback({ errCode: global.SUCCESS, profile: res.profile });
     }
 
-    if (res.profile.privacy == 0) {
-      // Privacy setting is PRIVATE, just return username and about
-      return callback({ errCode: global.SUCCESS, user: { username: res.username, about: res.profile.about } });
-    } else if (res.profile.privacy == 1) {
-      // Privacy setting is FRIENDS, check if target has followed user
-      Friends.findOne({ 'to_id': user_id, 'from_id': target_id }, function (err, res) {
+    var result = {};
+    Friends.findOne({ 'to_id': user_id, 'from_id': target_id }, function (err, followed) {
+      if (err) return callback({ errCode: global.ERROR });
+      Friends.findOne({ 'to_id': target_id, 'from_id': user_id }, function (err, follow) {
         if (err) return callback({ errCode: global.ERROR });
-        if (pair) 
-          return callback({ errCode: global.SUCCESS, user: 
-            {username: res.username, about: res.profile.about, age: res.profile.age, food_preferences: res.profile.food_preferences, gender: res.profile.gender, phone_number: res.profile.phone_number} });
-        else
-          return callback({ errCode: global.SUCCESS, user: { username: res.username, about: res.profile.about } });
+
+        result['errCode'] = global.SUCCESS;
+        if (followed) result['followed'] = 1;
+        else result['followed'] = 0;
+
+        if (follow) result['follow'] = 1;
+        else result['follow'] = 0;
+
+        if (res.profile.privacy == 0 || (res.profile.privacy == 1 && !followed)) {
+          // Privacy setting is PRIVATE or privacy setting is FRIENDS but not followed, just return username and about
+          result['profile'] = { username: res.username, about: res.profile.about };
+          return callback(result);
+        } else {
+          // No privacy settings or privacy setting is PUBLIC or 
+          // privacy setting is FRIENDS and followed, return everything
+          result['profile'] = { username: res.username, about: res.profile.about, age: res.profile.age, food_preferences: res.profile.food_preferences, gender: res.profile.gender, phone_number: res.profile.phone_number };
+          return callback(result);
+        }
       });
-    } else {
-      return callback({ errCode: global.SUCCESS, user: 
-        {username: res.username, about: res.profile.about, age: res.profile.age, food_preferences: res.profile.food_preferences, gender: res.profile.gender, phone_number: res.profile.phone_number} });
-    }
+    });
   });
 }
 
