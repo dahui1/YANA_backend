@@ -6,7 +6,6 @@ var User = new Schema({
   username : String,
   password : String,
   device_token : String,
-  profile : String,
   profile : {
     privacy : Number,
     about : String,

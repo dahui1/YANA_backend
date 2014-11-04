@@ -21,7 +21,15 @@ router.post('/create_user', function(req, res) {
   //  return res.json(result);
   passport.authenticate('local-signup', function(err, result, info) {
     if (err) return res.send(err);
-    return res.json(info);
+    if (result) {
+      req.logIn(result, function(err) {
+        if (err)
+          return res.json(err);
+        return res.json(info);
+      });
+    } else {
+      return res.json(info);
+    }
   })(req);
 });
 
@@ -72,10 +80,25 @@ router.get('/search_users_by_name/:username', data.isLoggedIn, function(req, res
   });
 });
 
-router.get('/profile/:user_id', data.isLoggedIn, function(req, res) {
-  data.getUserById(req.param('user_id'), function(result) {
-    return res.json({ errCode: global.SUCCESS, profile: result.username });
+router.get('/profile/:user_id/:target_id', data.isLoggedIn, function(req, res) {
+  data.getUserProfile(req.param('user_id'), req.param('target_id'), function(result) {
+    return res.json(result);
   });
 });
+
+router.post('/edit_profile', data.isLoggedIn, function(req, res) {
+  if (req.body.user_id != req.session.passport.user)
+    return callback({ errCode: global.NO_PERMISSION });
+  data.edit_profile(req.body, function(result) {
+    return res.json(result);
+  });
+});
+
+router.post('/delete_user/:user_id', function(req, res) {
+  data.deleteUserById(req.param('user_id'), function(result) {
+    return res.json(result);
+  });
+});
+
 
 module.exports = router;

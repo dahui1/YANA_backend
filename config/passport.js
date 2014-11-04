@@ -37,7 +37,7 @@ module.exports = function(passport) {
 
 					newUser.save(function(err, u) {
 						if (err)  return done(err);
-						return done(null, false, { errCode: global.SUCCESS, user_id: u._id });
+						return done(null, u, { errCode: global.SUCCESS, user_id: u._id });
 					})
 				}
 			});
