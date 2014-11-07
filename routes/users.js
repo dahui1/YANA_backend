@@ -33,6 +33,12 @@ router.post('/create_user', function(req, res) {
   })(req);
 });
 
+router.post('/delete_user', function(req, res) {
+  data.deleteUser(req.body.user_id, function(result) {
+    return res.json(result);
+  });
+});
+
 router.post('/login', function(req, res) {
   passport.authenticate('local-login', function(err, result, info) {
     if (err) return res.send(err);
