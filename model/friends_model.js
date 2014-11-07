@@ -65,7 +65,7 @@ exports.getFriends = function(user_id, callback) {
 
 exports.getFriendRequests = function(user_id, callback) {
   Friends.find({ to_id: user_id }, function(err, response) {
-    if (err) callback({ errCode: global.ERROR });
+    if (err) return callback({ errCode: global.ERROR });
     if (response == null) return callback({ errCode: global.INVALID_USER_ID });
 
     result = {};
@@ -74,6 +74,10 @@ exports.getFriendRequests = function(user_id, callback) {
 
     var len = response.length;
     var count = 0;
+
+    if (len == 0) {
+      return callback(result);
+    }
 
     response.forEach(function(r) {
       Friends.find({ from_id: user_id, to_id: r.from_id }, function(err, res) {
