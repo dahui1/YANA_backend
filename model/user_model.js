@@ -105,13 +105,15 @@ exports.getUserProfile = function(user_id, target_id, callback) {
   User.findById(target_id, function(err, res){
     if (res == null) return callback({ errCode: global.INVALID_USER_ID });
 
-// If user gets his own profile, just return everything in profile
+    var result = {};
+
+    // If user gets his own profile, just return everything in profile
     if (user_id == target_id) {
-        res.profile["username"] = res.username;
-        return callback({ errCode: global.SUCCESS, profile: res.profile });
+        result['errCode'] = 1;
+        result['profile'] = { username: res.username, about: res.profile.about, age: res.profile.age, food_preferences: res.profile.food_preferences, gender: res.profile.gender, phone_number: res.profile.phone_number };
+        return callback(result);
     }
 
-    var result = {};
     Friends.findOne({ 'to_id': user_id, 'from_id': target_id }, function (err, followed) {
       if (err) return callback({ errCode: global.ERROR });
       Friends.findOne({ 'to_id': target_id, 'from_id': user_id }, function (err, follow) {

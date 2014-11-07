@@ -3,14 +3,6 @@ var data = require('../model/user_model');
 var passport = require('passport');
 var router = express.Router();
 
-/* GET users listing. */
-
-router.get('/user_list', function(req, res) {
-  data.allUsers(function(result) {
-    return res.json(result);
-  });
-});
-
 router.post('/create_user', function(req, res) {
   var isValidUsername = data.checkUsername(req.body.username);
   var isValidPassword = data.checkPassword(req.body.password);
@@ -94,7 +86,7 @@ router.get('/profile/:user_id/:target_id', data.isLoggedIn, function(req, res) {
 
 router.post('/edit_profile', data.isLoggedIn, function(req, res) {
   if (req.body.user_id != req.session.passport.user)
-    return callback({ errCode: global.NO_PERMISSION });
+    return res.json({ errCode: global.NO_PERMISSION });
   data.edit_profile(req.body, function(result) {
     return res.json(result);
   });

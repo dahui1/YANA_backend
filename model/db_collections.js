@@ -11,7 +11,8 @@ var User = new Schema({
     about : String,
     age : Number,
     gender : String,
-    phone_number : String
+    phone_number : String,
+    food_preferences : String
   },
   friends : [String],
   longitude : Number,
