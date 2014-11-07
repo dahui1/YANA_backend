@@ -44,6 +44,7 @@ var Request = new Schema({
 var Friends = new Schema({
   to_username : String,
   to_id : String,
+  from_username : String,
   from_id : String},
   {collection : 'friends'}
 );

@@ -20,6 +20,7 @@ exports.follow = function(to_id, from_id, callback) {
         newFriends.to_username = to_res.username;
         newFriends.to_id = to_id;
         newFriends.from_id = from_id;
+        newFriends.from_username = from_res.username;
 
         newFriends.save(function(err) {
           if (err) return callback({ errCode: global.ERROR });
@@ -83,7 +84,7 @@ exports.getFriendRequests = function(user_id, callback) {
       Friends.find({ from_id: user_id, to_id: r.from_id }, function(err, res) {
         if (err) callback({ errCode: global.ERROR });
         if (res == '') {
-          var f = { to_username: r.to_username, to_id: r.to_id, from_id: r.from_id };
+          var f = { to_username: r.to_username, to_id: r.to_id, from_username: r.from_username, from_id: r.from_id };
           result['friends'].push(f);
         }
         count++;
