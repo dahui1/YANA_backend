@@ -8,6 +8,8 @@ var url = 'http://yana169.herokuapp.com';
 
 var cookies;
 
+var test_request_id;
+
 // Generate a random name for each test
 var randomname = Math.floor((Math.random() * 10000000) + 1);
 
@@ -23,7 +25,7 @@ describe('Request Test', function() {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
-                if (err)　{
+                if (err) {
                     throw err;
                 }
                 res.body.errCode.should.equal(1);
@@ -51,11 +53,12 @@ describe('Request Test', function() {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function(err, res) {
-                    if (err)　{
+                    if (err) {
                         throw err;
                     }
                     res.body.errCode.should.equal(1);
                     res.body.should.have.property('request_id');
+                    test_request_id = res.body.request_id;
                     done();
                 });
         });
@@ -69,7 +72,7 @@ describe('Request Test', function() {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function(err, res) {
-                    if (err)　{
+                    if (err) {
                         throw err;
                     }
                     res.body.errCode.should.equal(1);
@@ -81,8 +84,8 @@ describe('Request Test', function() {
     describe('Handle Meal Request', function() {
         it('should return {errCode: 1} and request_id on decline', function(done) {
             var body = {
-                user_id: "5449c0f3e4b0bec4bf235a28",
-                request_id: "544b0140059ba48453232a6e",
+                user_id: global.test_user2_id,
+                request_id: test_request_id,
                 action: "decline"
             };
             request(url)
@@ -92,19 +95,19 @@ describe('Request Test', function() {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function(err, res) {
-                    if (err)　{
+                    if (err) {
                         throw err;
                     }
                     res.body.errCode.should.equal(1);
-                    res.body.request_id.should.equal("544b0140059ba48453232a6e");
+                    res.body.request_id.should.equal(test_request_id);
                     done();
                 });
         });
 
         it('should return {errCode: 1} and request_id on accept', function(done) {
             var body = {
-                user_id: "5449c0f3e4b0bec4bf235a28",
-                request_id: "544b0140059ba48453232a6e",
+                user_id: global.test_user2_id,
+                request_id: test_request_id,
                 action: "accept"
             };
             request(url)
@@ -114,11 +117,11 @@ describe('Request Test', function() {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function(err, res) {
-                    if (err)　{
+                    if (err) {
                         throw err;
                     }
                     res.body.errCode.should.equal(1);
-                    res.body.request_id.should.equal("544b0140059ba48453232a6e");
+                    res.body.request_id.should.equal(test_request_id);
                     done();
                 });
         });

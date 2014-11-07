@@ -24,7 +24,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -44,7 +44,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-1);
@@ -63,7 +63,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-1);
@@ -85,7 +85,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-2);
@@ -104,7 +104,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-2);
@@ -123,7 +123,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-3);
@@ -144,7 +144,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-4);
@@ -163,7 +163,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-4);
@@ -182,7 +182,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -203,7 +203,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err2, res2) {
-					if (err2)　{
+					if (err2) {
 						throw err2;
 					}
 					res2.body.errCode.should.equal(1);
@@ -219,7 +219,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-5);
@@ -236,7 +236,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -252,7 +252,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -269,7 +269,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -295,7 +295,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -315,7 +315,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(-11);
@@ -332,7 +332,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -350,7 +350,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -366,7 +366,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
@@ -392,7 +392,7 @@ describe('Users Test', function() {
 						.expect('Content-Type', /json/)
 						.expect(200)
 						.end(function(err, res) {
-							if (err)　{
+							if (err) {
 								throw err;
 							}
 							res.body.errCode.should.equal(1);
@@ -419,7 +419,7 @@ describe('Users Test', function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.end(function(err, res) {
-					if (err)　{
+					if (err) {
 						throw err;
 					}
 					res.body.errCode.should.equal(1);
