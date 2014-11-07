@@ -35,4 +35,10 @@ router.get('/friend_requests/:user_id', user.isLoggedIn, function(req, res) {
   });
 });
 
+router.post('/block_user', user.isLoggedIn, function(req, res) {
+  data.blockUser(req.param('user_id'), req.param('block_id'), function(result) {
+    return res.json(result);
+  })
+})
+
 module.exports = router;

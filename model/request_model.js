@@ -1,6 +1,7 @@
 var collections = require('./db_collections');
 var Request = collections.Request;
 var User = collections.User;
+var Friend = collections.Friends;
 
 var apn = require('apn');
 var path = require('path');
@@ -44,7 +45,7 @@ exports.createRequest =
 
   if (invitations instanceof Array) {
     invitations.forEach(function (invited_user) {
-      sendPush(invited_user, "send", meal_type, meal_time);
+      sendPush(user_id, invited_user, "send", meal_type, meal_time);
     });
   }
 
@@ -73,7 +74,7 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
       request.findOne({ _id: req_id}, function(err, request) {
         if (err) return callback({ errCode: global.ERROR });
         if (!request) return callback({ errCode: global.SUCCESS });
-        sendPush(request.owner_id, "accept", request.meal_type, request.meal_time);
+        sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
         return callback({ errCode: global.SUCCESS, request_id: request._id });
       });
     });
@@ -91,19 +92,23 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
   }
 };
 
-function sendPush(user_id, type, meal_type, meal_time) {
+function sendPush(sender_id, user_id, type, meal_type, meal_time) {
   var user = User;
   user.findById(user_id, function (err, res) {
     if (res != null && res.device_token != null) {
-      var device = new apn.Device(res.device_token);
-      var new_request_push = new apn.Notification();
-      if (type == "send") {
-        new_request_push.alert = res.username + " has invited you to get " + meal_type + " at " + meal_time + "!";
-      } else if (type == "accept") {
-        new_request_push.alert =
-          res.username + " has accepted your invitation to get " + meal_type + " at " + meal_time + "!";
-      }
-      apnConnection.pushNotification(new_request_push, device);
+      Friend.find({ from_id: sender_id, to_id: user_id, blocked: false }, function(err, pair) {
+        if (!err) {
+          var device = new apn.Device(res.device_token);
+          var new_request_push = new apn.Notification();
+          if (type == "send") {
+            new_request_push.alert = res.username + " has invited you to get " + meal_type + " at " + meal_time + "!";
+          } else if (type == "accept") {
+            new_request_push.alert =
+              res.username + " has accepted your invitation to get " + meal_type + " at " + meal_time + "!";
+          }
+          apnConnection.pushNotification(new_request_push, device);
+        }
+      });
     }
   });
 };
