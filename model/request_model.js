@@ -108,6 +108,13 @@ function sendPush(user_id, type, meal_type, meal_time) {
   });
 };
 
+exports.deleteRequest = function(request_id, callback) {
+  Request.remove({ _id: request_id }, function(err, res) {
+    if (err) return callback({ errCode: global.INVALID_REQUEST_ID });
+    return callback({ errCode: global.SUCCESS });
+  });
+}
+
 // Delete all requests (for testing)
 exports.deleteAll = function(callback) {
   var request = Request;

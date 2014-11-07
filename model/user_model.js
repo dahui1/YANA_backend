@@ -68,8 +68,7 @@ exports.add = function(username, password, callback) {
 
 exports.deleteUser = function(user_id, callback) {
   User.remove({ _id: user_id }, function(err, res) {
-    if (err) return callback({ errCode: global.ERROR });
-    if (res == 0) return callback({ errCode: global.INVALID_USER_ID });
+    if (err) return callback({ errCode: global.INVALID_USER_ID });
     return callback({ errCode: global.SUCCESS });
   });
 }

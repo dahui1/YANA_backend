@@ -30,4 +30,10 @@ router.post('/handle_request', user.isLoggedIn, function(req, res) {
   });
 });
 
+router.post('/delete_request', function(req, res) {
+  data.deleteRequest(req.body.request_id, function(result) {
+    return res.json(result);
+  });
+});
+
 module.exports = router;
