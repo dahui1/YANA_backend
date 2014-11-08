@@ -143,9 +143,7 @@ exports.getUserProfile = function(user_id, target_id, callback) {
 
 exports.edit_profile = function(reqbody, callback) {
   User.findById(reqbody.user_id, function(err, res) {
-    if (err) return callback({ errCode: global.ERROR });
-
-    if (res == null) return callback({ errCode: global.INVALID_USER_ID });
+    if (err) return callback({ errCode: global.INVALID_USER_ID });
 
     if (reqbody.privacy != null)
       res.profile.privacy = reqbody.privacy;
@@ -174,7 +172,9 @@ exports.deleteAll = function(callback) {
     if (err) return callback(err);
   	for (var i = 0; i < users.length; i++) {
       if (users[i]._id == global.test_user1_id ||
-          users[i]._id == global.test_user2_id)
+          users[i]._id == global.test_user2_id ||
+          users[i]._id == global.test_user3_id ||
+          users[i]._id == global.test_user4_id)
         continue;
       user.remove({
       	_id: users[i]._id

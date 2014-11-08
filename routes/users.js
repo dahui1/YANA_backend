@@ -32,6 +32,11 @@ router.post('/delete_user', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
+  var isValidUsername = data.checkUsername(req.body.username);
+  var isValidPassword = data.checkPassword(req.body.password);
+  if (isValidUsername) return res.json({ 'errCode': global.WRONG_USERNAME_OR_PASSWORD });
+  if (isValidPassword) return res.json({ 'errCode': global.WRONG_USERNAME_OR_PASSWORD });
+
   passport.authenticate('local-login', function(err, result, info) {
     if (err) return res.send(err);
     if (result) {
