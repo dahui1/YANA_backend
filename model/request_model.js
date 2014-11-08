@@ -67,23 +67,26 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
 
   // if req_id does not exist, nothing will happen. i think request._id will be null
   if (action == "accept") {
-    var query = request.where({ _id: req_id });
-    query.findOne(function(err, request) {
+    request.update({ _id: req_id }, { $set : { accepted_user: user_id }}).exec(function(err, req) {
       if (err) return callback({ errCode: global.ERROR });
-      if (!request) return callback({ errCode: global.SUCCESS });
-      sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
-      request.accepted_user.$set(user_id);
-      request.save();
-      return callback({ errCode: global.SUCCESS, request_id: request._id });
+      if (!req) return callback({ errCode: global.ERROR });
+      request.findOne({ _id: req_id}, function(err, request) {
+        if (err) return callback({ errCode: global.ERROR });
+        if (!request) return callback({ errCode: global.SUCCESS });
+        sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
+        return callback({ errCode: global.SUCCESS, request_id: request._id });
+      });
     });
   } else if (action == "decline") {
-    var query = request.where({ _id: req_id });
-    query.findOne(function(err, request) {
+    request.update({ _id: req_id }, { $push : { declined_users: user_id }}).exec(function(err, req) {
       if (err) return callback({ errCode: global.ERROR });
-      if (!request) return callback({ errCode: global.SUCCESS });
-      request.declined_users.$push(user_id);
-      request.save();
-      return callback({ errCode: global.SUCCESS, request_id: request._id });
+      if (!req) return callback({ errCode: global.ERROR });
+      request.findOne({ _id: req_id}, function(err, request) {
+        if (err) return callback({ errCode: global.ERROR });
+        if (!request) return callback({ errCode: global.SUCCESS });
+        sendPush(user_id, request.owner_id, "decline", request.meal_type, request.meal_time);
+        return callback({ errCode: global.SUCCESS, request_id: request._id });
+      });
     });
   }
 };
