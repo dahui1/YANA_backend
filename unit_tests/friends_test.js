@@ -82,7 +82,7 @@ describe('Get friend list function', function() {
 
 describe('Get friend requests function', function() {
   it ('should return {errCode: 1} when getting friend reuqests of a valid user', function(done) {
-    model.getFriends(global.test_user_id, function(result) {
+    model.getFriendRequests(global.test_user_id, function(result) {
       assert.equal(1, result.errCode);
       assert.notEqual(undefined, result.friends);
       assert.equal(0, result.friends.length);
