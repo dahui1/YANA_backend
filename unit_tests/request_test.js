@@ -14,6 +14,7 @@ describe('Create Meal Request', function() {
   it('should return {errCode: 1} and request_id when all params are provided', function(done) {
     model.createRequest(
       global.test_user1_id,
+      global.test_user1,
       [global.test_user2_id],
       "meal type",
       "1414178401",
@@ -23,18 +24,6 @@ describe('Create Meal Request', function() {
         assert.notEqual(result.request_id, undefined);
         done();
       });
-  });
-
-  it('should return {errCode: -8} when not all params are provided', function(done) {
-    var err = model.createRequest(
-      global.test_user1_id,
-      [global.test_user2_id],
-      "meal type",
-      "time",
-      "comment").errCode;
-
-    assert.equal(err, -8);
-    done();
   });
 });
 
