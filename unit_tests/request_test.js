@@ -41,24 +41,24 @@ describe('Get Request List', function() {
 describe('Handle Request', function() {
   it('should return {errCode: 1, request_id} on accept', function() {
     model.handleRequest(
-      "5449c0f3e4b0bec4bf235a28",
-      "544b0140059ba48453232a6e",
+      test_user2_id,
+      "545d67cfc2127356191b48bf",
       "accept",
       function(result) {
         assert.equal(result.errCode, 1);
-        assert.equal(result.request_id, "5449b4c8adaabc6335ed9f2a");
+        assert.equal(result.request_id, "545d67cfc2127356191b48bf");
         done();
     });
   });
 
   it('should return {errCode: 1, request_id} on deny', function() {
     model.handleRequest(
-      "5449c0f3e4b0bec4bf235a28",
-      "544b0140059ba48453232a6e",
+      test_user2_id,
+      "545d67cfc2127356191b48bf",
       "decline",
       function(result) {
         assert.equal(result.errCode, 1);
-        assert.equal(result.request_id, "5449b4c8adaabc6335ed9f2a");
+        assert.equal(result.request_id, "545d67cfc2127356191b48bf");
         done();
     });
   });
