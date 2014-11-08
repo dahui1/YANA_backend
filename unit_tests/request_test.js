@@ -29,7 +29,7 @@ describe('Create Meal Request', function() {
 
 describe('Get Request List', function() {
   it('should return {errCode: 1, requests}', function() {
-    model.getRequests("5449c0f3e4b0bec4bf235a28",
+    model.getRequests(test_user1_id,
       function(result) {
         assert.equal(result.errCode, 1);
         assert.equal(result.requests.length, 0);
@@ -63,3 +63,4 @@ describe('Handle Request', function() {
     });
   });
 });
+
