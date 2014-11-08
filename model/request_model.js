@@ -67,26 +67,22 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
 
   // if req_id does not exist, nothing will happen. i think request._id will be null
   if (action == "accept") {
-    request.update({ _id: req_id }, { $set : { accepted_user: user_id }}).exec(function(err, req) {
+
+    request.findOne({ _id: req_id}, function(err, request) {
       if (err) return callback({ errCode: global.ERROR });
-      if (!req) return callback({ errCode: global.ERROR });
-      request.findOne({ _id: req_id}, function(err, request) {
-        if (err) return callback({ errCode: global.ERROR });
-        if (!request) return callback({ errCode: global.SUCCESS });
-        sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
-        return callback({ errCode: global.SUCCESS, request_id: request._id });
-      });
+      if (!request) return callback({ errCode: global.SUCCESS });
+      sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
+      request.accepted_user.$set(user_id);
+      request.save();
+      return callback({ errCode: global.SUCCESS, request_id: request._id });
     });
   } else if (action == "decline") {
-    request.update({ _id : req_id }, { $push : { declined_users: user_id }}).exec(function(err, req) {
+    request.findOne({ _id: req_id}, function(err, request) {
       if (err) return callback({ errCode: global.ERROR });
-      if (!req) return callback({ errCode: global.ERROR });
-      // return callback({ errCode: global.SUCCESS, waaa: "waaa", request_id: req._id });
-      request.findOne({ _id: req_id}, function(err, request) {
-        if (err) return callback({ errCode: global.ERROR });
-        if (!request) return callback({ errCode: global.SUCCESS });
-        return callback({ errCode: global.SUCCESS, request_id: request._id });
-      });
+      if (!request) return callback({ errCode: global.SUCCESS });
+      request.declined_users.$push(user_id);
+      request.save();
+      return callback({ errCode: global.SUCCESS, request_id: request._id });
     });
   }
 };
@@ -112,6 +108,7 @@ function sendPush(sender_id, user_id, type, meal_type, meal_time) {
   });
 };
 
+// Delete single request (for testing)
 exports.deleteRequest = function(request_id, callback) {
   Request.remove({ _id: request_id }, function(err, res) {
     if (err) return callback({ errCode: global.INVALID_REQUEST_ID });
