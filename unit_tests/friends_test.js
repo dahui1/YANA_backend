@@ -90,3 +90,13 @@ describe('Get friend requests function', function() {
     });
   });
 });
+
+describe('Block user function', function() {
+  it ('should return {errCode: 1} on successful block friend', function(done) {
+    model.blockUser(global.test_user_id, global.test_user2_id, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+});
+

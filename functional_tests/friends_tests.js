@@ -230,4 +230,43 @@ describe('Friends Test', function() {
 				});
 	  	});
 	});
+
+  describe('Block user function', function() {
+    it ('should return {errCode: 1} when successfully block user', function(done) {
+      var body = {
+        user_id : global.test_user1_id,
+        block_id : global.test_user2_id
+      };
+
+      request(url)
+        .post('/friends/block_user')
+        .set('Cookie', cookies)
+        .send(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+
+    it ('should show up in friends before block, not show up after block', function(done) {
+      request(url)
+        .get('/friends/friend_requests/' + global.test_user1_id)
+        .set('Cookie', cookies)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          res.body.friends.length.should.equal(0);
+          done();
+        });
+    })
+  });
 });
