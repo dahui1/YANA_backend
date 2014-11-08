@@ -67,8 +67,8 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
 
   // if req_id does not exist, nothing will happen. i think request._id will be null
   if (action == "accept") {
-
-    request.findOne({ _id: req_id}, function(err, request) {
+    var query = request.where({ _id: req_id });
+    query.findOne(function(err, request) {
       if (err) return callback({ errCode: global.ERROR });
       if (!request) return callback({ errCode: global.SUCCESS });
       sendPush(user_id, request.owner_id, "accept", request.meal_type, request.meal_time);
@@ -77,7 +77,8 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
       return callback({ errCode: global.SUCCESS, request_id: request._id });
     });
   } else if (action == "decline") {
-    request.findOne({ _id: req_id}, function(err, request) {
+    var query = request.where({ _id: req_id });
+    query.findOne(function(err, request) {
       if (err) return callback({ errCode: global.ERROR });
       if (!request) return callback({ errCode: global.SUCCESS });
       request.declined_users.$push(user_id);
