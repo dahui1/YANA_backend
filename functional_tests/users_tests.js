@@ -430,4 +430,36 @@ describe('Users Test', function() {
 				});
 		});
 	});		
+
+	describe('Logout Test', function() {
+		it('should return errCode=1 when a logged-in user logout', function(done) {
+			request(url)
+				.post('/users/logout')
+				.set('Cookie', cookies)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err) {
+						throw err;
+					}
+					res.body.errCode.should.equal(1);
+					done();
+				});
+		});
+
+		it('should return errCode=-9 when a user hasn\'t logged in', function(done) {
+			request(url)
+				.post('/users/logout')
+				.set('Cookie', cookies)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err) {
+						throw err;
+					}
+					res.body.errCode.should.equal(-9);
+					done();
+				});
+		});
+	});
 });

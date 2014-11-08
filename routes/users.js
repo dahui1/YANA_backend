@@ -60,7 +60,7 @@ router.post('/update_device_token', function(req, res) {
 
 router.post('/logout', data.isLoggedIn, function(req, res) {
   req.logout();
-  return res.json({errCode: global.SUCCESS});
+  return res.json({ errCode: global.SUCCESS });
 });
 
 router.get('/search_users_by_id/', data.isLoggedIn, function(req, res) {
