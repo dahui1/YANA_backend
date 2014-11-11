@@ -16,6 +16,7 @@ exports.checkPassword = function(password) {
 };
 
 // User Login (has been moved to passport.js)
+/*
 exports.login = function(username, password, callback) {
   var user = User;
   user.find({ username: username }, function(err, res){
@@ -32,6 +33,7 @@ exports.login = function(username, password, callback) {
     });
   });
 };
+*/
 
 exports.updateDeviceToken = function(user_id, device_token, callback) {
   var user = User;
@@ -45,6 +47,7 @@ exports.updateDeviceToken = function(user_id, device_token, callback) {
 };
 
 // Create Account (has been moved to passport.js)
+/*
 exports.add = function(username, password, callback) {
   var user = User;
 
@@ -65,13 +68,7 @@ exports.add = function(username, password, callback) {
     });
   });
 };
-
-exports.deleteUser = function(user_id, callback) {
-  User.remove({ _id: user_id }, function(err, res) {
-    if (err) return callback({ errCode: global.INVALID_USER_ID });
-    return callback({ errCode: global.SUCCESS });
-  });
-}
+*/
 
 exports.getUserById = function(user_id, callback) {
   User.findById(user_id, function(err, res){
@@ -106,6 +103,7 @@ exports.getUserProfile = function(user_id, target_id, callback) {
     if (res == null) return callback({ errCode: global.INVALID_USER_ID });
 
     var result = {};
+    result['privacy'] = res.profile.privacy;
 
     // If user gets his own profile, just return everything in profile
     if (user_id == target_id) {
@@ -197,14 +195,6 @@ exports.deleteUserById = function(user_id, callback) {
       return callback({ errCode: global.SUCCESS });
     });
   });
-};
-
-// List all users (for testing)
-exports.allUsers = function(callback) {
-  User.find(function(err, users) {
-    if (err) return callback({errCode: global.ERROR});
-    return callback(users);
-  })
 };
 
 exports.isLoggedIn = function(req, res, next) {

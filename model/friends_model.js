@@ -103,15 +103,6 @@ exports.blockUser = function(user_id, block_id, callback) {
   });
 };
 
-// List all friend pairs (for testing)
-exports.allFriends = function(callback) {
-  var friends = Friends;
-  friends.find(function(err, fs) {
-    if (err) return callback(err);
-    return callback(fs);
-  })
-};
-
 // Delete all friends (for testing)
 exports.deleteAll = function(callback) {
   var friends = Friends;
