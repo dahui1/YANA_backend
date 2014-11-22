@@ -14,6 +14,11 @@ var User = new Schema({
     phone_number : String,
     food_preferences : String
   },
+  facebook : {
+    id : String,
+    name : String,
+    email : String
+  },
   friends : [String],
   latitude : Number,
   longitude : Number},
