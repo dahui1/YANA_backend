@@ -83,10 +83,10 @@ router.get('/search_users_by_name/:username', data.isLoggedIn, function(req, res
   });
 });
 
-router.get('/nearby_users/:user_id/:friends_only/:lat/:lon/:range/:gender?/:age_low?/:age_high?', data.isLoggedIn, function(req, res) {
-  data.getNearbyUsersWithFilter(req.param('user_id'), req.param('friends_only'),
-    req.param('lat'), req.param('lon'), req.param('range'),
-    req.param('gender'), req.param('age_low'), req.param('age_high'), function(result) {
+router.get('/nearby_users/', data.isLoggedIn, function(req, res) {
+  data.getNearbyUsersWithFilter(req.query.user_id, req.query.friends_only,
+    req.query.lat, req.query.lon, req.query.range,
+    req.query.gender, req.query.age_low, req.query.age_high, function(result) {
     return res.json(result);
   });
 });

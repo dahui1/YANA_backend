@@ -112,11 +112,11 @@ exports.getNearbyUsersWithFilter =
     var query = { latitude: { $lte: parseFloat(lat) + dlat, $gte: parseFloat(lat) - dlat},
         longitude: { $lte: parseFloat(lon) + dlon, $gte: parseFloat(lon) - dlon} };
 
-    if (gender != 'null') {
+    if (gender) {
       query['profile.gender'] = gender;
     }
 
-    if (age_low != 'null' && age_high != 'null') {
+    if (age_low && age_high) {
       query['profile.age'] = { $gte: parseInt(age_low), $lte: parseInt(age_high) };
     }
 
