@@ -15,8 +15,8 @@ var User = new Schema({
     food_preferences : String
   },
   friends : [String],
-  longitude : Number,
-  latitude : Number},
+  latitude : Number,
+  longitude : Number},
   {collection : 'users'}
 );
 

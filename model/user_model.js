@@ -3,6 +3,8 @@ var collections = require('./db_collections');
 var User = collections.User;
 var Friends = collections.Friends;
 
+var DEFAULT_SEARCH_RANGE = 0.5;
+
 exports.checkUsername = function(user) {
   if (user.length > global.MAX_USERNAME_LENGTH || user.length == 0)
     return global.INVALID_USERNAME;
@@ -97,6 +99,67 @@ exports.getUserByName = function(username, callback) {
     return callback(result);
   });
 }
+
+exports.getNearbyUsersWithFilter =
+  function(user_id, friends_only, lat, lon, range, gender, age_low, age_high, callback) {
+    if (range == 'null') {
+      range = DEFAULT_SEARCH_RANGE;
+    }
+
+//    http://gis.stackexchange.com/questions/15545/working-out-the-coords-of-a-square-x-miles-from-a-center-point
+    var dlat = range / 69.0;
+    var dlon = dlat / Math.cos(range);
+    var query = { latitude: { $lte: parseFloat(lat) + dlat, $gte: parseFloat(lat) - dlat},
+        longitude: { $lte: parseFloat(lon) + dlon, $gte: parseFloat(lon) - dlon} };
+
+    if (gender != 'null') {
+      query['profile.gender'] = gender;
+    }
+
+    if (age_low != 'null' && age_high != 'null') {
+      query['profile.age'] = { $gte: parseInt(age_low), $lte: parseInt(age_high) };
+    }
+
+    if (friends_only == 'true') {
+      Friends.find({ from_id: user_id }, function(err, res) {
+        if (err) return callback({ errCode: global.ERROR });
+        var result = [];
+        var count = 0;
+        var len = res.length;
+
+        if (len == 0) {
+          return callback({ errCode: global.SUCCESS, users: result });
+        }
+
+        res.forEach(function(r) {
+          query['_id'] = r.to_id;
+          User.find(query, function(err, res) {
+            if (err) return callback({ errCode: global.ERROR });
+            if (res != '') {
+              result.push(res);
+            }
+            count++;
+            if (count == len) {
+              return callback({ errCode: global.SUCCESS, users: result });
+            }
+          });
+        });
+      });
+    } else {
+      User.find(query, function(err, res) {
+        if (err) return callback({ errCode: global.ERROR });
+        return callback({ errCode: global.SUCCESS, users: res })
+      });
+    }
+  };
+
+exports.updateUserLocation = function(user_id, lat, lon, callback) {
+  User.update({ _id: user_id }, { $set: { latitude: lat, longitude: lon }}, function(err, res) {
+    if (err) return callback({ errCode: global.ERROR });
+    if (res == null) return callback({ errCode: global.INVALID_USER_ID });
+    return callback({ errCode: global.SUCCESS });
+  });
+};
 
 exports.getUserProfile = function(user_id, target_id, callback) {
   User.findById(target_id, function(err, res){

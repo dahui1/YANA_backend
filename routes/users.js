@@ -83,8 +83,22 @@ router.get('/search_users_by_name/:username', data.isLoggedIn, function(req, res
   });
 });
 
+router.get('/nearby_users/:user_id/:friends_only/:lat/:lon/:range/:gender?/:age_low?/:age_high?', data.isLoggedIn, function(req, res) {
+  data.getNearbyUsersWithFilter(req.param('user_id'), req.param('friends_only'),
+    req.param('lat'), req.param('lon'), req.param('range'),
+    req.param('gender'), req.param('age_low'), req.param('age_high'), function(result) {
+    return res.json(result);
+  });
+});
+
 router.get('/profile/:user_id/:target_id', data.isLoggedIn, function(req, res) {
   data.getUserProfile(req.param('user_id'), req.param('target_id'), function(result) {
+    return res.json(result);
+  });
+});
+
+router.post('/update_location', data.isLoggedIn, function(req, res) {
+  data.updateUserLocation(req.body.user_id, req.body.lat, req.body.lon, function (result) {
     return res.json(result);
   });
 });
