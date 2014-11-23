@@ -108,7 +108,7 @@ exports.getNearbyUsersWithFilter =
 
 //    http://gis.stackexchange.com/questions/15545/working-out-the-coords-of-a-square-x-miles-from-a-center-point
     var dlat = range / 69.0;
-    var dlon = dlat / Math.cos(range);
+    var dlon = Math.abs(dlat / Math.cos(range));
     var query = { latitude: { $lte: parseFloat(lat) + dlat, $gte: parseFloat(lat) - dlat},
         longitude: { $lte: parseFloat(lon) + dlon, $gte: parseFloat(lon) - dlon} };
 
