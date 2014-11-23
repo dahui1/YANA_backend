@@ -111,7 +111,7 @@ exports.getNearbyUsersWithFilter =
     if (friends_only == 1) {
       Friends.find({ from_id: user_id }, function(err, res) {
         if (err) return callback({ errCode: global.ERROR });
-        var result = [];
+        var result = {};
         var count = 0;
         var len = res.length;
 
@@ -123,7 +123,7 @@ exports.getNearbyUsersWithFilter =
           query['_id'] = r.to_id;
           User.find(query, function(err, res) {
             if (err) return callback({ errCode: global.ERROR });
-            if (res != '') {
+            if (res != '' && res.user_id != user_id) {
               result.push(res);
             }
             count++;
@@ -134,6 +134,7 @@ exports.getNearbyUsersWithFilter =
         });
       });
     } else {
+      query['_id'] = { $ne: user_id };
       User.find(query, function(err, res) {
         if (err) return callback({ errCode: global.ERROR });
         return callback({ errCode: global.SUCCESS, users: res })
