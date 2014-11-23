@@ -17,25 +17,6 @@ exports.checkPassword = function(password) {
   return 0;
 };
 
-// User Login (has been moved to passport.js)
-/*
-exports.login = function(username, password, callback) {
-  var user = User;
-  user.find({ username: username }, function(err, res){
-    if (err) return callback({ errCode: global.ERROR });
-
-    // User not existing or the password is wrong
-    if (res == null || res.password != password)
-      return callback({ errCode: global.WRONG_USERNAME_OR_PASSWORD });
-
-    // save the res
-    res.save(function(err) {
-      if (err) return callback({ errCode: global.ERROR });
-      return callback({ errCode: global.SUCCESS, user_id: res._id });
-    });
-  });
-};
-*/
 
 exports.updateDeviceToken = function(user_id, device_token, callback) {
   var user = User;
@@ -48,29 +29,36 @@ exports.updateDeviceToken = function(user_id, device_token, callback) {
   );
 };
 
-// Create Account (has been moved to passport.js)
-/*
-exports.add = function(username, password, callback) {
+exports.addUserWithFB = function(fb_id, username, email, callback) {
   var user = User;
 
   // Check if the user name exists
-  user.findOne({ username: username },function(err, res){
+  user.findOne({ 'facebook.id': fb_id }, function(err, res){
     if (err) return callback({ errCode: global.ERROR });
-    if (res != null) return callback({ errCode: global.USERNAME_ALREADY_EXISTS });
+    if (res != null) {
+      res.username = email;
+      res.facebook.name = username;
+      res.facebook.email = email;
+      res.save(function(err, u) {
+        if (err) return callback({ errCode: global.ERROR });
+        return callback(u);
+      });
+    } else {
+      // Add the user to the database
+      var newuser = new user();
+      newuser.username = email;
+      newuser.facebook.id = fb_id;
+      newuser.facebook.email = email;
+      newuser.facebook.name = username;
 
-    // Add the user to the database
-    var newuser = new user();
-    newuser.username = username;
-    newuser.password = password;
-    newuser.profile = "test";
-
-    newuser.save(function(err, u) {
-      if (err) return callback({ errCode: global.ERROR });
-      return callback({ errCode: global.SUCCESS, user_id: u._id });
-    });
+      newuser.save(function(err, u) {
+        if (err) return callback({ errCode: global.ERROR });
+        return callback(u);
+      });
+    }
   });
 };
-*/
+
 
 exports.getUserById = function(user_id, callback) {
   User.findById(user_id, function(err, res){

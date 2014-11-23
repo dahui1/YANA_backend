@@ -25,6 +25,20 @@ router.post('/create_user', function(req, res) {
   })(req);
 });
 
+router.post('/auth/facebook', function(req, res) {
+  data.addUserWithFB(req.body.facebook_id, req.body.username, req.body.email, function(result) {
+    if (result['errCode'] == null) {
+      req.logIn(result, function(err) {
+        if (err)
+          return res.json(err);
+        return res.json({ errCode: global.SUCCESS, user_id: result._id });
+      })
+    }
+    else 
+      return res.json(result);
+  });
+});
+
 router.post('/delete_user', function(req, res) {
   data.deleteUser(req.body.user_id, function(result) {
     return res.json(result);
