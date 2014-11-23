@@ -171,6 +171,26 @@ describe('Users Test', function() {
 				});
 		});
 
+		it('should return errCode=1 and user_id when login with facebook account', function(done) {
+			var body = {
+		  		email : 'yeyh10@gmail.com',
+  				facebook_id : '745727562188279',
+				username : 'Yaohui Ye'
+			};
+			request(url)
+				.post('/users/auth/facebook')
+				.send(body)
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.end(function(err, res) {
+					if (err) {
+						throw err;
+					}
+					res.body.errCode.should.equal(1);
+					done();
+				});
+		});
+
 		it('should return errCode=1 and the user id when username exits and password is correct', function(done) {
 			var body = {
 				username : global.test_user1,

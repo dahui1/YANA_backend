@@ -58,9 +58,7 @@ module.exports = function(passport) {
 				if (err)
 					return done(err);
 
-				if (user.facebook.id != null)
-					return done(null, false, { errCode: global.WRONG_USERNAME_OR_PASSWORD });
-				if (!user) {
+				if (!user || user.facebook != null) {
 					return done(null, false, { errCode: global.WRONG_USERNAME_OR_PASSWORD });
 				} else if (!user.validPassword(password)) {
 					return done(null, false, { errCode: global.WRONG_USERNAME_OR_PASSWORD });
