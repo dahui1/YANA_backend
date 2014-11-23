@@ -252,3 +252,49 @@ describe('Get user profile', function(){
     });
   });
 });
+
+describe('Update user location function', function() {
+  it ('should return {errCode: 1} on successful update location', function(done) {
+    model.updateUserLocation(global.test_user_id, 100, -100, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+});
+
+describe('Get Nearby Users with Filter function', function() {
+  it ('should return {errCode: 1} with only required params', function(done) {
+    model.getNearbyUsersWithFilter(global.test_user_id, true, 100, -100, undefined, undefined, undefined, undefined,  function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+
+  it ('should return {errCode: 1} with range', function(done) {
+    model.getNearbyUsersWithFilter(global.test_user_id, true, 100, -100, 5, undefined, undefined, undefined, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+
+  it ('should return {errCode: 1} with gender', function(done) {
+    model.getNearbyUsersWithFilter(global.test_user_id, true, 100, -100, undefined, "male", undefined, undefined, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+
+  it ('should return {errCode: 1} with age range', function(done) {
+    model.getNearbyUsersWithFilter(global.test_user_id, true, 100, -100, undefined, undefined, 0, 100, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+
+  it ('should return {errCode: 1} with range, gender, age range', function(done) {
+    model.getNearbyUsersWithFilter(global.test_user_id, true, 100, -100, 5, "male", 0, 100, function(result) {
+      assert.equal(1, result.errCode);
+      done();
+    });
+  });
+});

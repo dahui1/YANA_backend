@@ -90,7 +90,7 @@ exports.getUserByName = function(username, callback) {
 
 exports.getNearbyUsersWithFilter =
   function(user_id, friends_only, lat, lon, range, gender, age_low, age_high, callback) {
-    if (range == 'null') {
+    if (range) {
       range = DEFAULT_SEARCH_RANGE;
     }
 
@@ -108,7 +108,7 @@ exports.getNearbyUsersWithFilter =
       query['profile.age'] = { $gte: parseInt(age_low), $lte: parseInt(age_high) };
     }
 
-    if (friends_only == 'true') {
+    if (friends_only == 1) {
       Friends.find({ from_id: user_id }, function(err, res) {
         if (err) return callback({ errCode: global.ERROR });
         var result = [];
