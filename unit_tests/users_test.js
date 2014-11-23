@@ -141,7 +141,14 @@ describe('Login function', function(){
         assert.equal(-4, info.errCode);
       }
       done();
-    })(req);    
+    })(req);
+  });
+
+  it('should return the user object when login with Facebook account', function(done) {
+    model.addUserWithFB('745727562188279', 'Yaohui Ye', 'yeyh10@gmail.com', function(result) {
+      assert.equal('yeyh10@gmail.com', result.username);
+      done();
+    });
   });
 });
 
