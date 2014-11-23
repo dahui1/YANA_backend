@@ -124,7 +124,9 @@ exports.getNearbyUsersWithFilter =
           User.find(query, function(err, res) {
             if (err) return callback({ errCode: global.ERROR });
             if (res != '' && res.user_id != user_id) {
-              result.push(res[0]);
+              for (var i = 0; i < res.length; i++) {
+                result.push(res[i]);
+              }
             }
             count++;
             if (count == len) {
