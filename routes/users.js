@@ -97,7 +97,7 @@ router.get('/search_users_by_name/:username', data.isLoggedIn, function(req, res
   });
 });
 
-router.get('/nearby_users/', data.isLoggedIn, function(req, res) {
+router.get('/nearby_users', data.isLoggedIn, function(req, res) {
   data.getNearbyUsersWithFilter(req.query.user_id, req.query.friends_only,
     req.query.lat, req.query.lon, req.query.range,
     req.query.gender, req.query.age_low, req.query.age_high, function(result) {

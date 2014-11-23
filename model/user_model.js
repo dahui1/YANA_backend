@@ -111,7 +111,7 @@ exports.getNearbyUsersWithFilter =
     if (friends_only == 1) {
       Friends.find({ from_id: user_id }, function(err, res) {
         if (err) return callback({ errCode: global.ERROR });
-        var result = {};
+        var result = [];
         var count = 0;
         var len = res.length;
 
@@ -124,7 +124,7 @@ exports.getNearbyUsersWithFilter =
           User.find(query, function(err, res) {
             if (err) return callback({ errCode: global.ERROR });
             if (res != '' && res.user_id != user_id) {
-              result.push(res);
+              result.push(res[0]);
             }
             count++;
             if (count == len) {
