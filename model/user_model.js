@@ -90,7 +90,7 @@ exports.getUserByName = function(username, callback) {
 
 exports.getNearbyUsersWithFilter =
   function(user_id, friends_only, lat, lon, range, gender, age_low, age_high, callback) {
-    if (range) {
+    if (!range) {
       range = DEFAULT_SEARCH_RANGE;
     }
 
