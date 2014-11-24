@@ -299,6 +299,126 @@ describe('Users Test', function() {
 		});
 	});
 
+  describe('Get Nearby Users with Filter Test', function() {
+    it('should return errCode=1 when searching with only required params', function(done) {
+      var body = {
+        user_id : global.test_user1,
+        friends_only : 1,
+        lat : 100,
+        lon : 100
+      };
+      request(url)
+        .get('/users/nearby_users')
+        .set('Cookie', cookies)
+        .query(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+
+    it('should return errCode=1 when searching with custom range', function(done) {
+      var body = {
+        user_id : global.test_user1,
+        friends_only : 0,
+        lat : 100,
+        lon : 100,
+        range : 10
+      };
+      request(url)
+        .get('/users/nearby_users')
+        .set('Cookie', cookies)
+        .query(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+
+    it('should return errCode=1 when searching with gender', function(done) {
+      var body = {
+        user_id : global.test_user1,
+        friends_only : 1,
+        lat : 100,
+        lon : 100,
+        gender : 'male'
+      };
+      request(url)
+        .get('/users/nearby_users')
+        .set('Cookie', cookies)
+        .query(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+
+    it('should return errCode=1 when searching with age range', function(done) {
+      var body = {
+        user_id : global.test_user1,
+        friends_only : 0,
+        lat : 100,
+        lon : 100,
+        age_low : 10,
+        age_high : 100
+      };
+      request(url)
+        .get('/users/nearby_users')
+        .set('Cookie', cookies)
+        .query(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+
+    it('should return errCode=1 when searching with custom range, gender, age range', function(done) {
+      var body = {
+        user_id : global.test_user1,
+        friends_only : 1,
+        lat : 100,
+        lon : 100,
+        range : 5,
+        gender : 'male',
+        age_low : 10,
+        age_high : 100
+      };
+      request(url)
+        .get('/users/nearby_users')
+        .set('Cookie', cookies)
+        .query(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          res.body.errCode.should.equal(1);
+          done();
+        });
+    });
+  });
+
 	describe('Edit User Profile Test', function() {
 		it('should return errCode=1 when user_id equals to the id stored in session', function(done) {
 			var body = {
