@@ -226,7 +226,13 @@ exports.deleteAll = function(callback) {
       if (users[i]._id == global.test_user1_id ||
           users[i]._id == global.test_user2_id ||
           users[i]._id == global.test_user3_id ||
-          users[i]._id == global.test_user4_id)
+          users[i]._id == global.test_user4_id ||
+          users[i]._id == "5464206df0bbef0b006d7044" ||
+          users[i]._id == "546fc14385016ea3e59c2019" ||
+          users[i]._id == "545d655a1655870b0015523b" ||
+          users[i]._id == "545d6af31655870b00155256" ||
+          users[i]._id == "545e9b481b8c7d0b0050e923"
+        )
         continue;
       user.remove({
       	_id: users[i]._id
