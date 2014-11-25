@@ -325,7 +325,7 @@ describe('Users Test', function() {
     it('should return errCode=1 when searching with custom range', function(done) {
       var body = {
         user_id : global.test_user1,
-        friends_only : 0,
+        friends_only : 1,
         lat : 100,
         lon : 100,
         range : 10
@@ -371,7 +371,7 @@ describe('Users Test', function() {
     it('should return errCode=1 when searching with age range', function(done) {
       var body = {
         user_id : global.test_user1,
-        friends_only : 0,
+        friends_only : 1,
         lat : 100,
         lon : 100,
         age_low : 10,
