@@ -93,14 +93,23 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
 
 function unixToPretty(unix_time) {
   var date = new Date(parseInt(unix_time) * 1000);
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var tail = "AM"
-  if (hours > 12) {
-    tail = "PM";
+  var hours = date.getUTCHours();
+  var tail = "PM"
+  // HACK for PST
+  date.setHours(hours - 8);
+  hours = date.getUTCHours();
+  hours -= 8;
+  if (hours <= 0) {
+    hours += 12;
+  } else if (hours > 12) {
     hours -= 12;
+  } else {
+    tail = "AM";
   }
   hours = hours.toString()
+
+  var minutes = date.getUTCMinutes();
+
   if (minutes < 10) {
     minutes = "0" + minutes.toString();
   }
