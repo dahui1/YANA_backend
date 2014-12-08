@@ -64,3 +64,33 @@ describe('Handle Request', function() {
   });
 });
 
+describe('Push formatting', function() {
+  it ('should output properly formatted time for push', function() {
+    function unixToPretty(unix_time) {
+      var date = new Date(parseInt(unix_time) * 1000);
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var tail = "AM"
+      if (hours > 12) {
+        tail = "PM";
+        hours -= 12;
+      }
+      hours = hours.toString()
+      if (minutes < 10) {
+        minutes = "0" + minutes.toString();
+      }
+      else {
+        minutes = minutes.toString();
+      }
+      var pretty = hours + ":" + minutes + " " + tail;
+      return pretty;
+    }
+
+    assert.equal(unixToPretty("1418022432"), "11:07 PM");
+    assert.equal(unixToPretty("1418011332"), "8:02 PM");
+    assert.equal(unixToPretty("1418017732"), "9:48 PM");
+    assert.equal(unixToPretty("1417807732"), "11:28 AM");
+    assert.equal(unixToPretty("1417799000"), "9:03 AM");
+  })
+});
+

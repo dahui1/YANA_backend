@@ -91,6 +91,26 @@ exports.handleRequest = function(user_id, req_id, action, callback) {
   }
 };
 
+function unixToPretty(unix_time) {
+  var date = new Date(parseInt(unix_time) * 1000);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var tail = "AM"
+  if (hours > 12) {
+    tail = "PM";
+    hours -= 12;
+  }
+  hours = hours.toString()
+  if (minutes < 10) {
+    minutes = "0" + minutes.toString();
+  }
+  else {
+    minutes = minutes.toString();
+  }
+  var pretty = hours + ":" + minutes + " " + tail;
+  return pretty;
+}
+
 function sendPush(sender_id, user_id, type, meal_type, meal_time) {
   var user = User;
   user.findById(user_id, function (err, res) {
@@ -99,11 +119,12 @@ function sendPush(sender_id, user_id, type, meal_type, meal_time) {
         if (!err) {
           var device = new apn.Device(res.device_token);
           var new_request_push = new apn.Notification();
+          var pretty_time = unixToPretty(meal_time);
           if (type == "send") {
-            new_request_push.alert = res.username + " has invited you to get " + meal_type + " at " + meal_time + "!";
+            new_request_push.alert = res.username + " has invited you to get " + meal_type + " at " + pretty_time + "!";
           } else if (type == "accept") {
             new_request_push.alert =
-              res.username + " has accepted your invitation to get " + meal_type + " at " + meal_time + "!";
+              res.username + " has accepted your invitation to get " + meal_type + " at " + pretty_time + "!";
           }
           apnConnection.pushNotification(new_request_push, device);
         }
